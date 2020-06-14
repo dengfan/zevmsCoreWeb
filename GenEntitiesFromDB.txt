@@ -1,0 +1,1 @@
+scaffold-dbcontext -provider Pomelo.EntityFrameworkCore.MySql -connection "Server=localhost;Database=zevms027;Uid=root;Pwd=123456" -outputdir Models/Entities -force

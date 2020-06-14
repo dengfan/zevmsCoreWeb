@@ -1,0 +1,10 @@
+﻿@model ZEVMSWEB.Common.PaginatedList<ZEVMSWEB.Models.Entities.Characters>
+@{
+    Layout = "_Layout_Zevms027";
+    ViewData["Title"] = "蓝蜗牛 - Zevms027";
+}
+
+<div class="zevms_container">
+    <a asp-area="" asp-controller="Zevms027" asp-action="LWN_Auction" asp-route-inventoryType="1">拍卖行</a>
+    <a asp-area="" asp-controller="Zevms027" asp-action="LWN_Characters">角色查询</a>
+</div>

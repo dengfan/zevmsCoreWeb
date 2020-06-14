@@ -1,0 +1,131 @@
+﻿@model ZEVMSWEB.Common.PaginatedList<ZEVMSWEB.Models.AuctionItemViewModel>
+@{
+    Layout = "_Layout_Zevms027";
+    ViewData["Title"] = "拍卖行 - 蓝蜗牛 - Zevms027";
+}
+
+<div class="zevms_container">
+    <form class="form-inline" asp-action="LWN_Auction" method="get">
+        <select class="custom-select mb-2" name="inventoryType">
+            @{
+                var selected1 = ViewData["InventoryType"].ToString().Equals("1");
+                var selected2 = ViewData["InventoryType"].ToString().Equals("2");
+                var selected3 = ViewData["InventoryType"].ToString().Equals("3");
+                var selected4 = ViewData["InventoryType"].ToString().Equals("4");
+                var selected5 = ViewData["InventoryType"].ToString().Equals("5");
+                var selected0 = ViewData["InventoryType"].ToString().Equals("0");
+            }
+            <option value="1" selected="@selected1">装备</option>
+            <option value="2" selected="@selected2">消耗</option>
+            @*<option value="3" selected="@selected3">设置</option>*@
+            <option value="4" selected="@selected4">材料</option>
+            @*<option value="5" selected="@selected5">现金</option>*@
+        </select>
+        <input class="form-control mb-2 mx-sm-2" type="text" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="按道具名称或道具ID搜索" />
+        <button type="submit" class="btn btn-primary mb-2">搜索</button>
+        <a class="btn btn-default mb-2 ml-2" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]">清除搜索</a>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>
+                    <a asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">道具</a>
+                </th>
+                <th>
+                    <a asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">价格</a>
+                </th>
+                <th>数量</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="60">
+                        <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="true">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OwnerCharacterName)<br />
+                        <strong>@Html.DisplayFor(modelItem => item.ItemName)</strong><br />
+                        <span class="small">ID: @Html.DisplayFor(modelItem => item.ItemId)</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                </tr>
+                @if (item.InventoryType == 1)
+                {
+                    <tr class="table-borderless">
+                        <td>
+                        </td>
+                        <td colspan="3">
+                            <div class="zevms_eqp_panel">
+                                @if (item.Strong > 0)
+                                {
+                                    <span>力量 +</span>@Html.DisplayFor(modelItem => item.Strong)<br />
+                                }
+                                @if (item.Dexterity > 0)
+                                {
+                                    <span>敏捷 +</span>@Html.DisplayFor(modelItem => item.Dexterity)<br />
+                                }
+                                @if (item.Intelligence > 0)
+                                {
+                                    <span>智力 +</span>@Html.DisplayFor(modelItem => item.Intelligence)<br />
+                                }
+                                @if (item.Luck > 0)
+                                {
+                                    <span>运气 +</span>@Html.DisplayFor(modelItem => item.Luck)<br />
+                                }
+                                @if (item.WAtk > 0)
+                                {
+                                    <span>物理攻击 +</span>@Html.DisplayFor(modelItem => item.WAtk)<br />
+                                }
+                                @if (item.WDef > 0)
+                                {
+                                    <span>物理防御 +</span>@Html.DisplayFor(modelItem => item.WDef)<br />
+                                }
+                                @if (item.MAtk > 0)
+                                {
+                                    <span>魔法攻击 +</span>@Html.DisplayFor(modelItem => item.MAtk)<br />
+                                }
+                                @if (item.MDef > 0)
+                                {
+                                    <span>魔法防御 +</span>@Html.DisplayFor(modelItem => item.MDef)<br />
+                                }
+                                @Html.DisplayFor(modelItem => item.Dkfm)
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="LWN_Auction"
+       asp-route-inventoryType="@ViewData["InventoryType"]"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        上一页
+    </a>
+
+    <a asp-action="LWN_Auction"
+       asp-route-inventoryType="@ViewData["InventoryType"]"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        下一页
+    </a>
+</div>

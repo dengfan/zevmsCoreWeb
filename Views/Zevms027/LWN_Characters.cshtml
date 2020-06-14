@@ -1,0 +1,69 @@
+﻿@model ZEVMSWEB.Common.PaginatedList<ZEVMSWEB.Models.CharacterViewModel>
+@{
+    Layout = "_Layout_Zevms027";
+    ViewData["Title"] = "角色查询 - 蓝蜗牛 - Zevms027";
+}
+
+<div class="zevms_container">
+    <form class="form-inline" asp-action="LWN_Characters" method="get">
+        <input class="form-control mb-2 mr-sm-2" type="text" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="按名称搜索" />
+        <button type="submit" class="btn btn-primary mb-2">搜索</button>
+        <a class="btn btn-default mb-2 ml-2" asp-action="LWN_Characters">清除搜索</a>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="LWN_Characters" asp-route-sortOrder="@ViewData["IdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">角色ID</a>
+                </th>
+                <th>名称</th>
+                <th>
+                    <a asp-action="LWN_Characters" asp-route-sortOrder="@ViewData["LevelSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">等级</a>
+                </th>
+                <th>职业</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Level)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobName)
+                        @*<a asp-action="Details" asp-route-id="@item.Id">详情</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="LWN_Characters"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        上一页
+    </a>
+
+    <a asp-action="LWN_Characters"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        下一页
+    </a>
+</div>
