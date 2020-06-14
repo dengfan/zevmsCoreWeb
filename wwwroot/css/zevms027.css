@@ -1,138 +1,140 @@
 ﻿body {
-	background: url(../img/bg1.jpg) no-repeat center top fixed;
+    background: url(../img/bg1.jpg) no-repeat center top fixed;
 }
 
 header {
-	opacity: 0.95;
+    opacity: 0.95;
+}
+
+main {
+    background: url(../img/nav_bg.png) no-repeat center top;
 }
 
 .zevms_nav {
-	position: relative;
-	margin: 0 auto;
-	padding-top: 162px;
-	background: url(../img/nav_bg.png) no-repeat center top;
-	width: 483px;
-	text-align: center;
-	font-size: 0;
+    position: relative;
+    margin: 0 auto;
+    padding-top: 162px;
+    text-align: center;
+    font-size: 0;
 }
 
-	.zevms_nav a {
-		display: inline-block;
-		width: 27px;
-		height: 95px;
-		background: url(../img/WorldSelect.BtWorld.e.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a {
+        display: inline-block;
+        width: 27px;
+        height: 95px;
+        background: url(../img/WorldSelect.BtWorld.e.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav span {
-		display: inline-block;
-		width: 27px;
-		height: 97px;
-		background: url(../img/WorldSelect.BtWorld.e.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav span {
+        display: inline-block;
+        width: 27px;
+        height: 97px;
+        background: url(../img/WorldSelect.BtWorld.e.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a.active {
-		position: relative;
-		top: 4px;
-		display: inline-block;
-		width: 27px;
-		height: 95px;
-	}
+    .zevms_nav a.active {
+        position: relative;
+        top: 4px;
+        display: inline-block;
+        width: 27px;
+        height: 95px;
+    }
 
-	.zevms_nav a#nav_item_lwn {
-		background: url(../img/WorldSelect.BtWorld.0.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_lwn {
+        background: url(../img/WorldSelect.BtWorld.0.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_mgz {
-		background: url(../img/WorldSelect.BtWorld.1.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_mgz {
+        background: url(../img/WorldSelect.BtWorld.1.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_lsl {
-		background: url(../img/WorldSelect.BtWorld.2.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_lsl {
+        background: url(../img/WorldSelect.BtWorld.2.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_ppz {
-		background: url(../img/WorldSelect.BtWorld.3.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_ppz {
+        background: url(../img/WorldSelect.BtWorld.3.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_xqs {
-		background: url(../img/WorldSelect.BtWorld.4.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_xqs {
+        background: url(../img/WorldSelect.BtWorld.4.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_hpx {
-		background: url(../img/WorldSelect.BtWorld.5.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_hpx {
+        background: url(../img/WorldSelect.BtWorld.5.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_dhg {
-		background: url(../img/WorldSelect.BtWorld.6.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_dhg {
+        background: url(../img/WorldSelect.BtWorld.6.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_zyg {
-		background: url(../img/WorldSelect.BtWorld.7.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_zyg {
+        background: url(../img/WorldSelect.BtWorld.7.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_wph {
-		background: url(../img/WorldSelect.BtWorld.8.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_wph {
+        background: url(../img/WorldSelect.BtWorld.8.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_xjl {
-		background: url(../img/WorldSelect.BtWorld.9.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_xjl {
+        background: url(../img/WorldSelect.BtWorld.9.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_pqe {
-		background: url(../img/WorldSelect.BtWorld.10.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_pqe {
+        background: url(../img/WorldSelect.BtWorld.10.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_bxr {
-		background: url(../img/WorldSelect.BtWorld.11.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_bxr {
+        background: url(../img/WorldSelect.BtWorld.11.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_str {
-		background: url(../img/WorldSelect.BtWorld.12.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_str {
+        background: url(../img/WorldSelect.BtWorld.12.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_zsm {
-		background: url(../img/WorldSelect.BtWorld.13.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_zsm {
+        background: url(../img/WorldSelect.BtWorld.13.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_dhl {
-		background: url(../img/WorldSelect.BtWorld.14.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_dhl {
+        background: url(../img/WorldSelect.BtWorld.14.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_xbt {
-		background: url(../img/WorldSelect.BtWorld.15.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_xbt {
+        background: url(../img/WorldSelect.BtWorld.15.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_phl {
-		background: url(../img/WorldSelect.BtWorld.16.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_phl {
+        background: url(../img/WorldSelect.BtWorld.16.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_hyz {
-		background: url(../img/WorldSelect.BtWorld.17.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_hyz {
+        background: url(../img/WorldSelect.BtWorld.17.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_qey {
-		background: url(../img/WorldSelect.BtWorld.18.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_qey {
+        background: url(../img/WorldSelect.BtWorld.18.disabled.0.png) no-repeat center bottom;
+    }
 
-	.zevms_nav a#nav_item_hmg {
-		background: url(../img/WorldSelect.BtWorld.19.disabled.0.png) no-repeat center bottom;
-	}
+    .zevms_nav a#nav_item_hmg {
+        background: url(../img/WorldSelect.BtWorld.19.disabled.0.png) no-repeat center bottom;
+    }
 
 .zevms_container {
-	margin-top: 12px;
-	padding: 12px;
-	border: 2px solid #9D894C;
-	border-radius: 16px;
-	background-color: #f7fed8;
-	opacity: .94;
-	min-height: 100px;
+    margin-top: 12px;
+    padding: 12px;
+    border: 2px solid #9D894C;
+    border-radius: 16px;
+    background-color: #f7fed8;
+    opacity: .94;
+    min-height: 100px;
 }
 
 .zevms_eqp_panel {
-	margin-bottom: 4px;
-	padding: 12px;
-	border: 1px solid #c0deff;
-	border-radius: 8px;
-	background-color: #e1edfb;
-	color: #4c63bb;
+    margin-bottom: 4px;
+    padding: 12px;
+    border: 1px solid #c0deff;
+    border-radius: 8px;
+    background-color: #e1edfb;
+    color: #4c63bb;
 }
