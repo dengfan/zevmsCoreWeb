@@ -29,7 +29,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th></th>
+                <th width="50"></th>
                 <th>
                     <a asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">道具</a>
                 </th>
@@ -43,7 +43,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td width="60">
+                    <td>
                         <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="true">
                     </td>
                     <td>
