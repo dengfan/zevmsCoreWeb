@@ -5,7 +5,7 @@
 }
 
 <div class="zevms_container">
-    <form class="form-inline" asp-action="LWN_Auction" method="get">
+    <form class="form-inline justify-content-center mb-2" asp-action="LWN_Auction" method="get">
         <select class="custom-select mb-2" name="inventoryType">
             @{
                 var selected1 = ViewData["InventoryType"].ToString().Equals("1");
@@ -26,10 +26,52 @@
         <a class="btn btn-default mb-2 ml-2" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]">清除搜索</a>
     </form>
 
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    @*分页条*@
+    <ul class="pagination justify-content-center">
+        @if (Model.Start > 1 && Model.End > 1) // 加上首页
+        {
+            <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="1"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">1</a>
+            </li>
+        }
+        @for (var i = Model.Start; i <= Model.End; i++)
+        {
+            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@i</a>
+            </li>
+        }
+        @if (Model.Start < Model.TotalPages && Model.End < Model.TotalPages) // 加上尾页
+        {
+            <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@Model.TotalPages"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@Model.TotalPages</a>
+            </li>
+        }
+    </ul>
+
     <table class="table">
         <thead>
             <tr>
-                <th width="50"></th>
+                <th width="60"></th>
                 <th>
                     <a asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">道具</a>
                 </th>
@@ -47,9 +89,14 @@
                         <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="true">
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.OwnerCharacterName)<br />
                         <strong>@Html.DisplayFor(modelItem => item.ItemName)</strong><br />
-                        <span class="small">ID: @Html.DisplayFor(modelItem => item.ItemId)</span>
+                        <span class="small">
+                            所有者：@Html.DisplayFor(modelItem => item.OwnerCharacterName)
+                        </span><br />
+                        <span class="small">
+                            ID: @Html.DisplayFor(modelItem => item.Id)
+                        </span>
+                        <!-- @Html.DisplayFor(modelItem => item.ItemId) -->
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
@@ -106,26 +153,40 @@
         </tbody>
     </table>
 
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
-
-    <a asp-action="LWN_Auction"
-       asp-route-inventoryType="@ViewData["InventoryType"]"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @prevDisabled">
-        上一页
-    </a>
-
-    <a asp-action="LWN_Auction"
-       asp-route-inventoryType="@ViewData["InventoryType"]"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @nextDisabled">
-        下一页
-    </a>
+    @*分页条*@
+    <ul class="pagination justify-content-center">
+        @if (Model.Start > 1 && Model.End > 1) // 加上首页
+        {
+            <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="1"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">1</a>
+            </li>
+        }
+        @for (var i = Model.Start; i <= Model.End; i++)
+        {
+            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@i</a>
+            </li>
+        }
+        @if (Model.Start < Model.TotalPages && Model.End < Model.TotalPages) // 加上尾页
+        {
+            <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@Model.TotalPages"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@Model.TotalPages</a>
+            </li>
+        }
+    </ul>
 </div>

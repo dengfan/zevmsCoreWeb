@@ -46,7 +46,13 @@ namespace ZEVMSWEB.Common
         {
             get
             {
-                int start = PageIndex - 3;
+                int start = PageIndex - 2;
+
+                if (TotalPages - PageIndex <= 2)
+                {
+                    start = TotalPages - 5;
+                }
+
                 if (start <= 0)
                 {
                     start = 1;
@@ -59,13 +65,13 @@ namespace ZEVMSWEB.Common
         {
             get
             {
-                int end = PageIndex + 3;
+                int end = PageIndex + 2;
 
-                if (Start == 1)
+                if (PageIndex <= 2)
                 {
-                    end = 7;
+                    end = 5;
                 }
-                
+
                 if (end > TotalPages)
                 {
                     end = TotalPages;

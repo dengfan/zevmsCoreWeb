@@ -7,6 +7,8 @@ namespace ZEVMSWEB.Models
 {
     public class AuctionItemViewModel
     {
+        public long Id { get; set; }
+
         public int InventoryType { get; set; }
 
         public string ItemImageBase64String { get; set; }

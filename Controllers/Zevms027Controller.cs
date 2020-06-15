@@ -153,6 +153,7 @@ namespace ZEVMSWEB.Controllers
             int pageSize = 50;
             return View(await PaginatedList<AuctionItemViewModel>.CreateAsync(auctionItems.AsNoTracking().Select(o => new AuctionItemViewModel
             {
+                Id = o.Id,
                 InventoryType = o.Inventorytype.Value,
                 ItemImageBase64String = WzData.GetImageBase64String(o.Itemid.Value, o.Inventorytype.Value, _wzFile),
                 ItemId = o.Itemid.Value,
