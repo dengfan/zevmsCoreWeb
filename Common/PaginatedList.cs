@@ -41,5 +41,37 @@ namespace ZEVMSWEB.Common
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
+
+        public int Start
+        {
+            get
+            {
+                int start = PageIndex - 3;
+                if (start <= 0)
+                {
+                    start = 1;
+                }
+                return start;
+            }
+        }
+
+        public int End
+        {
+            get
+            {
+                int end = PageIndex + 3;
+
+                if (Start == 1)
+                {
+                    end = 7;
+                }
+                
+                if (end > TotalPages)
+                {
+                    end = TotalPages;
+                }
+                return end;
+            }
+        }
     }
 }
