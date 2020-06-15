@@ -1,36 +1,73 @@
 ﻿@model ZEVMSWEB.Common.PaginatedList<ZEVMSWEB.Models.CharacterViewModel>
 @{
     Layout = "_Layout_Zevms027";
-    ViewData["zevms027.css"] = @"<link rel=""stylesheet"" href=""/css/zevms027.css"" />";
+    ViewData["Title"] = "角色查询 - 蘑菇仔 - Zevms027";
 }
 
 <div class="zevms_container">
-    <form class="form-inline" asp-action="MGZ_Characters" method="get" style="margin-bottom:12px;">
-        <input class="form-control" type="text" id="SearchString" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="按名称搜索" />
-        <button style="margin:0 6px;" type="submit" class="btn btn-primary">搜索</button>
-        <a class="btn btn-default" asp-action="MGZ_Characters">清除搜索</a>
+    <form class="form-inline justify-content-center mb-2" asp-action="MGZ_Characters" method="get">
+        <input class="form-control mb-2 mr-sm-2" type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="按名称搜索" />
+        <button type="submit" class="btn btn-primary mb-2">搜索</button>
+        <a class="btn btn-default mb-2 ml-2" asp-action="MGZ_Characters">清除搜索</a>
     </form>
 
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    @*分页条*@
+    <ul class="pagination justify-content-center">
+        @if (Model.Start > 1 && Model.End > 1) // 加上首页
+        {
+            <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
+                <a asp-action="MGZ_Characters"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="1"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">1</a>
+            </li>
+        }
+        @for (var i = Model.Start; i <= Model.End; i++)
+        {
+            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                <a asp-action="MGZ_Characters"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@i</a>
+            </li>
+        }
+        @if (Model.Start < Model.TotalPages && Model.End < Model.TotalPages) // 加上尾页
+        {
+            <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
+                <a asp-action="MGZ_Characters"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@Model.TotalPages"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@Model.TotalPages</a>
+            </li>
+        }
+    </ul>
+
+    @*主内容表格*@
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    <a asp-action="MGZ_Characters" asp-route-sortOrder="@ViewData["IdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">角色ID</a>
+                    <a asp-action="MGZ_Characters" asp-route-sortOrder="@ViewData["IdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">ID</a>
                 </th>
-                <th>名称</th>
-                <th>
+                <th width="60">
                     <a asp-action="MGZ_Characters" asp-route-sortOrder="@ViewData["LevelSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">等级</a>
                 </th>
-                <th>职业</th>
+                <th width="60">职业</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
+                    <!-- @Html.DisplayFor(modelItem => item.Id) -->
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -46,24 +83,37 @@
         </tbody>
     </table>
 
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
-
-    <a asp-action="MGZ_Characters"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @prevDisabled">
-        上一页
-    </a>
-
-    <a asp-action="MGZ_Characters"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @nextDisabled">
-        下一页
-    </a>
+    @*分页条*@
+    <ul class="pagination justify-content-center">
+        @if (Model.Start > 1 && Model.End > 1) // 加上首页
+        {
+            <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
+                <a asp-action="MGZ_Characters"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="1"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">1</a>
+            </li>
+        }
+        @for (var i = Model.Start; i <= Model.End; i++)
+        {
+            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                <a asp-action="MGZ_Characters"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@i</a>
+            </li>
+        }
+        @if (Model.Start < Model.TotalPages && Model.End < Model.TotalPages) // 加上尾页
+        {
+            <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
+                <a asp-action="MGZ_Characters"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@Model.TotalPages"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@Model.TotalPages</a>
+            </li>
+        }
+    </ul>
 </div>

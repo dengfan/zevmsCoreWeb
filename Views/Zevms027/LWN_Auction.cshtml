@@ -21,7 +21,7 @@
             <option value="4" selected="@selected4">材料</option>
             @*<option value="5" selected="@selected5">现金</option>*@
         </select>
-        <input class="form-control mb-2 mx-sm-2" type="text" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="按道具名称或道具ID搜索" />
+        <input class="form-control mb-2 mx-sm-2" type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="按道具名称或道具ID搜索" />
         <button type="submit" class="btn btn-primary mb-2">搜索</button>
         <a class="btn btn-default mb-2 ml-2" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]">清除搜索</a>
     </form>
@@ -71,14 +71,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th width="60"></th>
+                <th width="70"></th>
                 <th>
                     <a asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">道具</a>
                 </th>
-                <th>
+                <th width="100">
                     <a asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">价格</a>
                 </th>
-                <th>数量</th>
+                <th width="60">数量</th>
             </tr>
         </thead>
         <tbody>

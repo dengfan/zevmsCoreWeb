@@ -49,9 +49,10 @@ namespace ZEVMSWEB.Controllers
             string searchString,
             int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["IdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewData["LevelSortParm"] = sortOrder == "level" ? "level_desc" : "level";
-            ViewData["CurrentFilter"] = searchString;
+            
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -61,7 +62,9 @@ namespace ZEVMSWEB.Controllers
                 searchString = currentFilter;
             }
 
-            var characters = from c in _context.Characters where c.World.Value == 0 select c;
+            ViewData["CurrentFilter"] = searchString;
+
+            var characters = from c in _context.Characters where c.World.Value == 0 && c.Level >= 10 && c.Gm == 0 select c;
             if (!string.IsNullOrEmpty(searchString))
             {
                 characters = characters.Where(c => c.Name.Contains(searchString));
@@ -108,9 +111,10 @@ namespace ZEVMSWEB.Controllers
             int? pageNumber)
         {
             ViewData["InventoryType"] = inventoryType;
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["ItemIdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewData["PriceSortParm"] = sortOrder == "price" ? "price_desc" : "price";
-            ViewData["CurrentFilter"] = searchString;
+
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -119,6 +123,8 @@ namespace ZEVMSWEB.Controllers
             {
                 searchString = currentFilter;
             }
+
+            ViewData["CurrentFilter"] = searchString;
 
             var searchItems = new List<int>();
             if (!string.IsNullOrWhiteSpace(searchString))
@@ -186,9 +192,10 @@ namespace ZEVMSWEB.Controllers
             string searchString,
             int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["IdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewData["LevelSortParm"] = sortOrder == "level" ? "level_desc" : "level";
-            ViewData["CurrentFilter"] = searchString;
+            
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -198,7 +205,9 @@ namespace ZEVMSWEB.Controllers
                 searchString = currentFilter;
             }
 
-            var characters = from c in _context.Characters where c.World.Value == 0 select c;
+            ViewData["CurrentFilter"] = searchString;
+
+            var characters = from c in _context.Characters where c.World.Value == 1 && c.Level >= 10 && c.Gm == 0 select c;
             if (!string.IsNullOrEmpty(searchString))
             {
                 characters = characters.Where(c => c.Name.Contains(searchString));
