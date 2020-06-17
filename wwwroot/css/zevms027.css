@@ -120,6 +120,15 @@ header {
         background: url(../img/WorldSelect.BtWorld.19.disabled.0.png) no-repeat center bottom;
     }
 
+.zevms_login_panel {
+    margin-top: 12px;
+    padding: 12px;
+    border: 2px solid #9D894C;
+    border-radius: 16px;
+    background-color: #f7fed8;
+    opacity: .94;
+}
+
 .zevms_container {
     margin-top: 12px;
     padding: 12px;

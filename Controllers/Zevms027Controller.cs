@@ -12,6 +12,7 @@ using ZEVMSWEB.Common;
 using ZEVMSWEB.Models.Entities;
 using ZEVMSWEB.Models;
 using reWZ;
+using Microsoft.AspNetCore.Http;
 
 namespace ZEVMSWEB.Controllers
 {
@@ -30,6 +31,45 @@ namespace ZEVMSWEB.Controllers
             _wzFile = wzFile;
             _wzData = wzData;
             _context = dbContext;
+        }
+
+        public IActionResult Login(string acc, string pwd)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(acc) && !string.IsNullOrEmpty(pwd) && acc.Length > 4 && pwd.Length > 4)
+                {
+                    var a = _context.Accounts.FirstOrDefault(o => o.Name == acc && o.Password == pwd);
+                    if (a != null)
+                    {
+                        var loginData = new LoginDataViewModel
+                        {
+                            AccountId = a.Id,
+                            AccountName = a.Name,
+                        };
+
+                        var charList = _context.Characters.Where(o => o.Accountid == a.Id).AsNoTracking().Select(o => new CharacterViewModel
+                        {
+                            Id = o.Id,
+                            Job = o.Job.Value,
+                            Name = o.Name,
+                            Level = o.Level.Value,
+                            World = o.World.Value,
+                        }).ToList();
+
+                        loginData.Characters = charList;
+                        HttpContext.Session.Set("LoginData", loginData);
+
+                        return new JsonResult(@"{ ""status"": 1, msg: ""ok"" }");
+                    }
+                }
+
+                return new JsonResult(@"{ ""status"": 1, msg: ""no account"" }");
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult($@"{{ ""status"": 1, msg: ""{ex.Message}"" }}");
+            }
         }
 
         public IActionResult Index()
@@ -52,7 +92,7 @@ namespace ZEVMSWEB.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["IdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewData["LevelSortParm"] = sortOrder == "level" ? "level_desc" : "level";
-            
+
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -169,7 +209,7 @@ namespace ZEVMSWEB.Controllers
                 OwnerCharacterId = o.Characterid.Value,
                 OwnerCharacterName = o.Character.Name,
                 Strong = o.Str.Value,
-                Dexterity=o.Dex.Value,
+                Dexterity = o.Dex.Value,
                 Intelligence = o.Int.Value,
                 Luck = o.Luk.Value,
                 WAtk = o.Watk.Value,
@@ -195,7 +235,7 @@ namespace ZEVMSWEB.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["IdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewData["LevelSortParm"] = sortOrder == "level" ? "level_desc" : "level";
-            
+
             if (searchString != null)
             {
                 pageNumber = 1;

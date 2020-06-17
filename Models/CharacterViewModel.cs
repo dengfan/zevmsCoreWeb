@@ -28,5 +28,22 @@ namespace ZEVMSWEB.Models
                 }
             }
         }
+
+        public int World { get; set; }
+        public string WorldName
+        {
+            get
+            {
+                switch (World)
+                {
+                    case 0:
+                        return "蓝蜗牛";
+                    case 1:
+                        return "蘑菇仔";
+                    default:
+                        return "基佬";
+                }
+            }
+        }
     }
 }

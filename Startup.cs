@@ -33,6 +33,7 @@ namespace ZEVMSWEB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddDbContext<zevms027Context>();
             services.AddSingleton(WZFile);
@@ -99,9 +100,8 @@ namespace ZEVMSWEB
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

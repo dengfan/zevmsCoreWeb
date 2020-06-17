@@ -1,36 +1,53 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using ZEVMSWEB.Common
+<!DOCTYPE html>
 <html lang="zh">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - 自由冒险岛</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/site.css?@DateTime.Now.Ticks.ToString("x")" />
-	<link rel="stylesheet" href="~/css/zevms027.css?@DateTime.Now.Ticks.ToString("x")" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 自由冒险岛数据库</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css?@DateTime.Now.Ticks.ToString("x")" />
+    <link rel="stylesheet" href="~/css/zevms027.css?@DateTime.Now.Ticks.ToString("x")" />
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">自由冒险岛</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">首页</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Zevms027" asp-action="Index">Zevms027</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="zevms_bg">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">自由冒险岛数据库</a>
+                @{
+                    var loginData = Context.Session.Get<LoginDataViewModel>("LoginData");
+                    if (loginData != null)
+                    {
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#accountInfoModel">
+                            我的账号
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModel">
+                            登录
+                        </button>
+                    }
+                }
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Zevms027" asp-action="Index">Zevms027</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="zevms_bg">
         <div class="container">
             <main role="main" class="pb-3">
                 @{ var currentActionName = string.Empty;
@@ -105,40 +122,127 @@
                         <span style="display:none;">石头人</span>
                     </span>
                     @*<span class="@zsm" asp-area="" asp-controller="Zevms027" asp-action="ZSM" title="紫色猫" id="nav_item_zsm">
-                    <span style="display:none;">紫色猫</span>
-                </span>
-                <span class="@dhl" asp-area="" asp-controller="Zevms027" asp-action="DHL" title="大灰狼" id="nav_item_dhl">
-                    <span style="display:none;">大灰狼</span>
-                </span>
-                <span class="@xbt" asp-area="" asp-controller="Zevms027" asp-action="XBT" title="小白兔" id="nav_item_xbt">
-                    <span style="display:none;">小白兔</span>
-                </span>
-                <span class="@phl" asp-area="" asp-controller="Zevms027" asp-action="PHL" title="喷火龙" id="nav_item_phl">
-                    <span style="display:none;">喷火龙</span>
-                </span>
-                <span class="@hyz" asp-area="" asp-controller="Zevms027" asp-action="HYZ" title="火野猪" id="nav_item_hyz">
-                    <span style="display:none;">火野猪</span>
-                </span>
-                <span class="@qey" asp-area="" asp-controller="Zevms027" asp-action="QEY" title="青鳄鱼" id="nav_item_qey">
-                    <span style="display:none;">青鳄鱼</span>
-                </span>
-                <span class="@hmg" asp-area="" asp-controller="Zevms027" asp-action="HMG" title="花蘑菇" id="nav_item_hmg">
-                    <span style="display:none;">花蘑菇</span>
-                </span>*@
+                            <span style="display:none;">紫色猫</span>
+                        </span>
+                        <span class="@dhl" asp-area="" asp-controller="Zevms027" asp-action="DHL" title="大灰狼" id="nav_item_dhl">
+                            <span style="display:none;">大灰狼</span>
+                        </span>
+                        <span class="@xbt" asp-area="" asp-controller="Zevms027" asp-action="XBT" title="小白兔" id="nav_item_xbt">
+                            <span style="display:none;">小白兔</span>
+                        </span>
+                        <span class="@phl" asp-area="" asp-controller="Zevms027" asp-action="PHL" title="喷火龙" id="nav_item_phl">
+                            <span style="display:none;">喷火龙</span>
+                        </span>
+                        <span class="@hyz" asp-area="" asp-controller="Zevms027" asp-action="HYZ" title="火野猪" id="nav_item_hyz">
+                            <span style="display:none;">火野猪</span>
+                        </span>
+                        <span class="@qey" asp-area="" asp-controller="Zevms027" asp-action="QEY" title="青鳄鱼" id="nav_item_qey">
+                            <span style="display:none;">青鳄鱼</span>
+                        </span>
+                        <span class="@hmg" asp-area="" asp-controller="Zevms027" asp-action="HMG" title="花蘑菇" id="nav_item_hmg">
+                            <span style="display:none;">花蘑菇</span>
+                        </span>*@
                 </div>
                 @RenderBody()
             </main>
         </div>
-	</div>
+    </div>
 
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2020 - 自由冒险岛
-		</div>
-	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	@RenderSection("Scripts", required: false)
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">登录您的游戏账号</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="inputAcc">账号</label>
+                            <input type="email" class="form-control" id="inputAcc">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPwd">密码</label>
+                            <input type="password" class="form-control" id="inputPwd">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="zevms_login_button">登录</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Info Modal -->
+    <div class="modal fade" id="accountInfoModel" data-keyboard="false" tabindex="-1" role="dialog"
+         aria-labelledby="accountInfoModel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">您的游戏账号信息</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @{
+                        if (loginData != null)
+                        {
+                            <ul class="list-group">
+                                @foreach (CharacterViewModel c in loginData.Characters)
+                                {
+                                <li class="list-group-item">
+                                    <span class="badge badge-info">
+                                        @c.WorldName
+                                    </span>
+                                    <strong style="display:inline-block;width:140px;">@c.Name</strong>
+                                    <span>@c.Level - @c.JobName</span>
+                                </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>
+                                暂无账号及角色信息。
+                            </p>
+                        }
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default">退出</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - ZEVMS
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        $('#zevms_login_button').click(function () {
+            var accVal = $('#inputAcc').val();
+            var pwdVal = $('#inputPwd').val();
+            if (accVal.length > 4 && pwdVal.length > 4) {
+                $.post("/Zevms027/Login", { acc: accVal, pwd: pwdVal }, function (res) {
+                    alert(res);
+                });
+            }
+        });
+    </script>
 </body>
 </html>

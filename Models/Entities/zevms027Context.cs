@@ -103,7 +103,7 @@ namespace ZEVMSWEB.Models.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;database=zevms027;uid=root;pwd=zevms027", x => x.ServerVersion("5.7.16-mysql"));
+                optionsBuilder.UseMySql("server=localhost;database=zevms027;uid=root;pwd=zevms027;AllowZeroDateTime=True;ConvertZeroDateTime=True;", x => x.ServerVersion("5.7.16-mysql"));
             }
         }
 
