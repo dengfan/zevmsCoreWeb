@@ -60,15 +60,30 @@ namespace ZEVMSWEB.Controllers
                         loginData.Characters = charList;
                         HttpContext.Session.Set("LoginData", loginData);
 
-                        return new JsonResult(@"{ ""status"": 1, msg: ""ok"" }");
+                        return new JsonResult(new ReponseJsonViewModel
+                        {
+                            Code = 0,
+                            Msg = "ok",
+                            Body = loginData,
+                        });
                     }
                 }
 
-                return new JsonResult(@"{ ""status"": 1, msg: ""no account"" }");
+                return new JsonResult(new ReponseJsonViewModel
+                {
+                    Code = 1,
+                    Msg = "哦豁，账号或密码不正确，请重新输入。",
+                    Body = null,
+                });
             }
             catch (Exception ex)
             {
-                return new JsonResult($@"{{ ""status"": 1, msg: ""{ex.Message}"" }}");
+                return new JsonResult(new ReponseJsonViewModel
+                {
+                    Code = 2,
+                    Msg = string.Concat("哦豁，出错了。", ex.Message),
+                    Body = ex,
+                });
             }
         }
 

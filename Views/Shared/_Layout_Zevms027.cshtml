@@ -169,10 +169,11 @@
                             <label for="inputPwd">密码</label>
                             <input type="password" class="form-control" id="inputPwd">
                         </div>
+                        <span id="zevms-login-failed-tips" style="color:red;"></span>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="zevms_login_button">登录</button>
+                    <button type="button" class="btn btn-primary" id="zevms-login-button">登录</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -185,7 +186,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">您的游戏账号信息</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">我的游戏账号信息</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -194,18 +195,25 @@
                     @{
                         if (loginData != null)
                         {
-                            <ul class="list-group">
+                            <table class="table">
+                                <tr class="table-borderless">
+                                    <th>小区</th>
+                                    <th>角色</th>
+                                    <th>等级</th>
+                                    <th>职业</th>
+                                </tr>
                                 @foreach (CharacterViewModel c in loginData.Characters)
                                 {
-                                <li class="list-group-item">
-                                    <span class="badge badge-info">
-                                        @c.WorldName
-                                    </span>
-                                    <strong style="display:inline-block;width:140px;">@c.Name</strong>
-                                    <span>@c.Level - @c.JobName</span>
-                                </li>
+                                    <tr>
+                                        <td>
+                                            <span class="badge badge-info">@c.WorldName</span>
+                                        </td>
+                                        <td>@c.Name</td>
+                                        <td>@c.Level</td>
+                                        <td>@c.JobName</td>
+                                    </tr>
                                 }
-                            </ul>
+                            </table>
                         }
                         else
                         {
@@ -216,7 +224,7 @@
                     }
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default">退出</button>
+                    <button type="button" class="btn btn-default">退出登录</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -225,7 +233,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - ZEVMS
+            &copy; 2020 - ZEVMS 版权所有
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -234,12 +242,27 @@
     @RenderSection("Scripts", required: false)
 
     <script>
-        $('#zevms_login_button').click(function () {
+        $('#inputAcc,#inputPwd').focus(function () {
+            $('#zevms-login-failed-tips').text('');
+        });
+
+        $('#zevms-login-button').click(function () {
+            var $btn = $(this);
+            $btn.text('登录中……').attr('disabled', true);
             var accVal = $('#inputAcc').val();
             var pwdVal = $('#inputPwd').val();
             if (accVal.length > 4 && pwdVal.length > 4) {
                 $.post("/Zevms027/Login", { acc: accVal, pwd: pwdVal }, function (res) {
-                    alert(res);
+                    if (res.code == 0) {
+                        // 登录成功
+                        var c = '@this.ViewContext.RouteData.Values["controller"]';
+                        var a = '@this.ViewContext.RouteData.Values["action"]';
+                        window.location.href = '/' + c + '/' + a;
+                    } else {
+                        // 登录失败
+                        $('#zevms-login-failed-tips').text(res.msg);
+                        $btn.text('登录').removeAttr('disabled');
+                    }
                 });
             }
         });
