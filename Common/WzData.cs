@@ -10,12 +10,28 @@ using System.Threading.Tasks;
 
 namespace ZEVMSWEB.Common
 {
+    /// <summary>
+    /// 缓存数据池，用于存储加载之后就不会变的数据
+    /// </summary>
     public class WzData
     {
+        /// <summary>
+        /// 道具名称字典
+        /// </summary>
         public Dictionary<int, string> ItemIdAndNameDic { get; set; }
+
+        /// <summary>
+        /// 道具图片字典
+        /// </summary>
+        private static Dictionary<int, string> _itemImageDic = new Dictionary<int, string>();
 
         public static string GetImageBase64String(int itemId, int inventoryType, WZFile wzfile)
         {
+            if (_itemImageDic.ContainsKey(itemId))
+            {
+                return _itemImageDic[itemId];
+            }
+
             WZCanvasProperty wzcp = null;
             try
             {
@@ -83,7 +99,9 @@ namespace ZEVMSWEB.Common
                     {
                         m.Save(ms, ImageFormat.Png);
                         byte[] byteImage = ms.ToArray();
-                        return Convert.ToBase64String(byteImage);
+                        var str = Convert.ToBase64String(byteImage);
+                        _itemImageDic.Add(itemId, str);
+                        return str;
                     }
                 }
             }
@@ -166,5 +184,7 @@ namespace ZEVMSWEB.Common
 
             return cat;
         }
+
+        
     }
 }

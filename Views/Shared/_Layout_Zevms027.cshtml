@@ -15,27 +15,32 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> 自由冒险岛Ver.27</a>
-                @{
-                    var loginData = Context.Session.Get<LoginDataViewModel>("LoginData");
-                    if (loginData != null)
-                    {
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#accountInfoModel">
-                            我的账号
-                        </button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModel">
-                            登录
-                        </button>
-                    }
-                }
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            @{
+                                var loginData = Context.Session.Get<LoginDataViewModel>("LoginData");
+                                if (loginData != null)
+                                {
+                                    <a href="#" class="nav-link text-dark" data-toggle="modal" data-target="#accountInfoModel">
+                                        我的账号
+                                        <span class="badge badge-danger">New</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="nav-link text-dark" data-toggle="modal" data-target="#loginModel">
+                                        登录
+                                        <span class="badge badge-danger">New</span>
+                                    </a>
+                                }
+                            }
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">首页</a>
                         </li>
@@ -44,6 +49,7 @@
                         </li>
                     </ul>
                 </div>
+
             </div>
         </nav>
     </header>
@@ -143,7 +149,7 @@
     <!-- Account Info Modal -->
     <div class="modal fade" id="accountInfoModel" data-keyboard="false" tabindex="-1" role="dialog"
          aria-labelledby="accountInfoModel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">我的游戏账号信息</h5>
@@ -157,21 +163,23 @@
                         {
                             <table class="table">
                                 <tr class="table-borderless">
-                                    <th>小区</th>
                                     <th>角色</th>
                                     <th>等级</th>
                                     <th>职业</th>
                                 </tr>
-                                @foreach (CharacterViewModel c in loginData.Characters)
+                                @foreach (var w in loginData.Characters.Select(o => new { o.World, o.WorldName }).Distinct().OrderBy(o => o.World))
                                 {
                                     <tr>
-                                        <td>
-                                            <span class="badge badge-info">@c.WorldName</span>
-                                        </td>
-                                        <td>@c.Name</td>
-                                        <td>@c.Level</td>
-                                        <td>@c.JobName</td>
+                                        <td colspan="4" class="text-center">- <span class="font-italic">@w.WorldName</span> -</td>
                                     </tr>
+                                    @foreach (CharacterViewModel c in loginData.Characters.Where(o => o.World == w.World).OrderBy(o => o.Id))
+                                    {
+                                        <tr>
+                                            <td>@c.Name</td>
+                                            <td>@c.Level</td>
+                                            <td>@c.JobName</td>
+                                        </tr>
+                                    }
                                 }
                             </table>
                         }
@@ -184,7 +192,7 @@
                     }
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default">退出登录</button>
+                    <button type="button" class="btn btn-danger" id="zevms-logout-button">退出登录</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -225,6 +233,16 @@
                     }
                 });
             }
+        });
+
+        $('#zevms-logout-button').click(function () {
+            var $btn = $(this);
+            $btn.text('登出中……').attr('disabled', true);
+            $.post("/Zevms027/Logout", function (res) {
+                var c = '@this.ViewContext.RouteData.Values["controller"]';
+                var a = '@this.ViewContext.RouteData.Values["action"]';
+                window.location.href = '/' + c + '/' + a;
+            });
         });
     </script>
 </body>

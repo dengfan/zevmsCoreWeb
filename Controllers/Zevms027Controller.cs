@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MySql.Data.MySqlClient;
-using ZEVMSWEB.Common;
-using ZEVMSWEB.Models.Entities;
-using ZEVMSWEB.Models;
 using reWZ;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZEVMSWEB.Common;
+using ZEVMSWEB.Models;
+using ZEVMSWEB.Models.Entities;
 
 namespace ZEVMSWEB.Controllers
 {
@@ -85,6 +85,19 @@ namespace ZEVMSWEB.Controllers
                     Body = ex,
                 });
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("LoginData");
+            HttpContext.Session.Clear();
+
+            return new JsonResult(new ReponseJsonViewModel
+            {
+                Code = 0,
+                Msg = "登出成功",
+                Body = null,
+            });
         }
 
         public IActionResult Index()
@@ -212,7 +225,7 @@ namespace ZEVMSWEB.Controllers
             }
 
             int pageSize = 50;
-            return View(await PaginatedList<AuctionItemViewModel>.CreateAsync(auctionItems.AsNoTracking().Select(o => new AuctionItemViewModel
+            return View(await PaginatedList<InventoryItemViewModel>.CreateAsync(auctionItems.AsNoTracking().Select(o => new InventoryItemViewModel
             {
                 Id = o.Id,
                 InventoryType = o.Inventorytype.Value,
@@ -231,7 +244,8 @@ namespace ZEVMSWEB.Controllers
                 WDef = o.Wdef.Value,
                 MAtk = o.Matk.Value,
                 MDef = o.Mdef.Value,
-                Dkfm = o.Options,
+                DakongCount = ZevmsUtils.GetDakongCount(o.Options),
+                FumoDesc = ZevmsUtils.GetFumoDescription(o.Options),
             }), pageNumber ?? 1, pageSize));
         }
         #endregion

@@ -40,55 +40,52 @@ namespace ZEVMSWEB
             services.AddSingleton(GetWzData());
         }
 
-        /// <summary>
-        /// 读取WZ数据
-        /// </summary>
-        /// <returns></returns>
         public WzData GetWzData()
         {
-            var stringDir = WZFile.MainDirectory.SingleOrDefault(d => d.Name == "String");
-            var itemImgFile = stringDir.SingleOrDefault(f => f.Name == "Item.img");
+            var wzData = new WzData();
+            var dic = new Dictionary<int, string>();
 
-            var wzData = new WzData
+            try
             {
-                ItemIdAndNameDic = new Dictionary<int, string>(),
-            };
+                var stringDir = WZFile.MainDirectory.SingleOrDefault(d => d.Name == "String");
+                var itemImgFile = stringDir.SingleOrDefault(f => f.Name == "Item.img");
 
-            if (wzData.ItemIdAndNameDic.Count > 0)
-            {
-                return wzData;
-            }
-
-            foreach (var imgDir in itemImgFile)
-            {
-                if (imgDir.Name == "Eqp")
+                foreach (var imgDir in itemImgFile)
                 {
-                    foreach (var subImgDir in imgDir)
+                    if (imgDir.Name == "Eqp")
                     {
-                        foreach (var item in subImgDir)
+                        foreach (var subImgDir in imgDir)
+                        {
+                            foreach (var item in subImgDir)
+                            {
+                                var hasNameNode = item.HasChild("name");
+                                var name = hasNameNode ? item["name"].ValueOrDefault("NO-NAME") : "NO-NAME";
+                                dic.Put(Convert.ToInt32(item.Name), name);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in imgDir)
                         {
                             var hasNameNode = item.HasChild("name");
                             var name = hasNameNode ? item["name"].ValueOrDefault("NO-NAME") : "NO-NAME";
-                            wzData.ItemIdAndNameDic.Put(Convert.ToInt32(item.Name), name);
+                            dic.Put(Convert.ToInt32(item.Name), name);
                         }
-
-                    }
-                }
-                else
-                {
-                    foreach (var item in imgDir)
-                    {
-                        var hasNameNode = item.HasChild("name");
-                        var name = hasNameNode ? item["name"].ValueOrDefault("NO-NAME") : "NO-NAME";
-                        wzData.ItemIdAndNameDic.Put(Convert.ToInt32(item.Name), name);
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+            wzData.ItemIdAndNameDic = dic;
             return wzData;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // 配置HTTP管道
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -99,6 +96,7 @@ namespace ZEVMSWEB
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();

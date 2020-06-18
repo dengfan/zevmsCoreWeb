@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ZEVMSWEB.Models
 {
-    public class AuctionItemViewModel
+    public class InventoryItemViewModel
     {
         public long Id { get; set; }
 
@@ -66,8 +66,13 @@ namespace ZEVMSWEB.Models
         public int MDef { get; set; }
 
         /// <summary>
-        /// 打孔附魔信息
+        /// 打孔数，用于判断装备品级
         /// </summary>
-        public string Dkfm { get; set; }
+        public int DakongCount { get; set; }
+
+        /// <summary>
+        /// 附魔信息
+        /// </summary>
+        public string FumoDesc { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model ZEVMSWEB.Common.PaginatedList<ZEVMSWEB.Models.AuctionItemViewModel>
+﻿@model ZEVMSWEB.Common.PaginatedList<ZEVMSWEB.Models.InventoryItemViewModel>
 @{
     Layout = "_Layout_Zevms027";
     ViewData["Title"] = "拍卖行 - 蓝蜗牛 - Zevms027";
@@ -111,40 +111,42 @@
                         <td>
                         </td>
                         <td colspan="3">
-                            <div class="zevms_eqp_panel">
+                            <div class="zevms_eqp_panel_@item.DakongCount">
                                 @if (item.Strong > 0)
                                 {
-                                    <span>力量 +</span>@Html.DisplayFor(modelItem => item.Strong)<br />
+                                <span>力量 +</span>@Html.DisplayFor(modelItem => item.Strong)<br />
                                 }
                                 @if (item.Dexterity > 0)
                                 {
-                                    <span>敏捷 +</span>@Html.DisplayFor(modelItem => item.Dexterity)<br />
+                                <span>敏捷 +</span>@Html.DisplayFor(modelItem => item.Dexterity)<br />
                                 }
                                 @if (item.Intelligence > 0)
                                 {
-                                    <span>智力 +</span>@Html.DisplayFor(modelItem => item.Intelligence)<br />
+                                <span>智力 +</span>@Html.DisplayFor(modelItem => item.Intelligence)<br />
                                 }
                                 @if (item.Luck > 0)
                                 {
-                                    <span>运气 +</span>@Html.DisplayFor(modelItem => item.Luck)<br />
+                                <span>运气 +</span>@Html.DisplayFor(modelItem => item.Luck)<br />
                                 }
                                 @if (item.WAtk > 0)
                                 {
-                                    <span>物理攻击 +</span>@Html.DisplayFor(modelItem => item.WAtk)<br />
+                                <span>物理攻击 +</span>@Html.DisplayFor(modelItem => item.WAtk)<br />
                                 }
                                 @if (item.WDef > 0)
                                 {
-                                    <span>物理防御 +</span>@Html.DisplayFor(modelItem => item.WDef)<br />
+                                <span>物理防御 +</span>@Html.DisplayFor(modelItem => item.WDef)<br />
                                 }
                                 @if (item.MAtk > 0)
                                 {
-                                    <span>魔法攻击 +</span>@Html.DisplayFor(modelItem => item.MAtk)<br />
+                                <span>魔法攻击 +</span>@Html.DisplayFor(modelItem => item.MAtk)<br />
                                 }
                                 @if (item.MDef > 0)
                                 {
-                                    <span>魔法防御 +</span>@Html.DisplayFor(modelItem => item.MDef)<br />
+                                <span>魔法防御 +</span>@Html.DisplayFor(modelItem => item.MDef)<br />
                                 }
-                                @Html.DisplayFor(modelItem => item.Dkfm)
+                                @if (!string.IsNullOrEmpty(item.FumoDesc)){
+                                    @Html.Raw(item.FumoDesc)
+                                }
                             </div>
                         </td>
                     </tr>
