@@ -54,6 +54,7 @@ namespace ZEVMSWEB.Models.Entities
         public string Promoters { get; set; }
         public int? Promoterschongzhi { get; set; }
         public int? Promoterschongzhilog { get; set; }
+        public long? Fj { get; set; }
 
         public virtual ICollection<Characterslots> CharacterslotsNavigation { get; set; }
         public virtual ICollection<Iplog> Iplog { get; set; }

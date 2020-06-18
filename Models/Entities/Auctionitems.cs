@@ -41,7 +41,9 @@ namespace ZEVMSWEB.Models.Entities
         public short? Jump { get; set; }
         public sbyte? ViciousHammer { get; set; }
         public string Options { get; set; }
+        public string Options2 { get; set; }
         public sbyte? Socket { get; set; }
+        public sbyte? Socket2 { get; set; }
         public int? Dzlevel { get; set; }
         public DateTime Shijian { get; set; }
 

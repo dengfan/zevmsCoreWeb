@@ -133,6 +133,13 @@ namespace ZEVMSWEB.Models.Entities
         public int? SwitchQunltkx { get; set; }
         public int? SwitchDuanzao { get; set; }
         public int? SwitchSkill { get; set; }
+        public int? Fumolevel { get; set; }
+        public int? Aa { get; set; }
+        public int? Bb { get; set; }
+        public int? Cc { get; set; }
+        public int? Dd { get; set; }
+        public int? Ee { get; set; }
+        public int? Ff { get; set; }
 
         public virtual Auctionpoint Auctionpoint { get; set; }
         public virtual CharactersKmob CharactersKmob { get; set; }

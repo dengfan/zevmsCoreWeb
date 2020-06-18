@@ -21,6 +21,7 @@ namespace ZEVMSWEB.Models.Entities
         public virtual DbSet<Accountsrecharge> Accountsrecharge { get; set; }
         public virtual DbSet<Auctionitems> Auctionitems { get; set; }
         public virtual DbSet<Auctionpoint> Auctionpoint { get; set; }
+        public virtual DbSet<Azjm> Azjm { get; set; }
         public virtual DbSet<Bossloa> Bossloa { get; set; }
         public virtual DbSet<Bosslog> Bosslog { get; set; }
         public virtual DbSet<Buddies> Buddies { get; set; }
@@ -40,6 +41,8 @@ namespace ZEVMSWEB.Models.Entities
         public virtual DbSet<Completpqs> Completpqs { get; set; }
         public virtual DbSet<Configvalues> Configvalues { get; set; }
         public virtual DbSet<Consumption> Consumption { get; set; }
+        public virtual DbSet<DlqIllegalRecords> DlqIllegalRecords { get; set; }
+        public virtual DbSet<Dlqvip> Dlqvip { get; set; }
         public virtual DbSet<DropData> DropData { get; set; }
         public virtual DbSet<DropDataGlobal> DropDataGlobal { get; set; }
         public virtual DbSet<Events> Events { get; set; }
@@ -63,6 +66,7 @@ namespace ZEVMSWEB.Models.Entities
         public virtual DbSet<Mountdata> Mountdata { get; set; }
         public virtual DbSet<MxmxdChenghao> MxmxdChenghao { get; set; }
         public virtual DbSet<MxmxdFumoInfo> MxmxdFumoInfo { get; set; }
+        public virtual DbSet<MxmxdFumoInfo2> MxmxdFumoInfo2 { get; set; }
         public virtual DbSet<MxmxdQqQun> MxmxdQqQun { get; set; }
         public virtual DbSet<MxmxdQqSj> MxmxdQqSj { get; set; }
         public virtual DbSet<Notes> Notes { get; set; }
@@ -73,6 +77,7 @@ namespace ZEVMSWEB.Models.Entities
         public virtual DbSet<Playernpcs> Playernpcs { get; set; }
         public virtual DbSet<PlayernpcsEquip> PlayernpcsEquip { get; set; }
         public virtual DbSet<Qqgm> Qqgm { get; set; }
+        public virtual DbSet<Quests> Quests { get; set; }
         public virtual DbSet<Reactordrops> Reactordrops { get; set; }
         public virtual DbSet<Redenvelopes> Redenvelopes { get; set; }
         public virtual DbSet<Redenvelopeslog> Redenvelopeslog { get; set; }
@@ -92,18 +97,24 @@ namespace ZEVMSWEB.Models.Entities
         public virtual DbSet<Storages> Storages { get; set; }
         public virtual DbSet<Topresults> Topresults { get; set; }
         public virtual DbSet<Trocklocations> Trocklocations { get; set; }
+        public virtual DbSet<VipItemcount> VipItemcount { get; set; }
         public virtual DbSet<Visitnpc> Visitnpc { get; set; }
         public virtual DbSet<Warehouse> Warehouse { get; set; }
+        public virtual DbSet<World> World { get; set; }
         public virtual DbSet<WzMxditemid> WzMxditemid { get; set; }
         public virtual DbSet<WzMxdskillid> WzMxdskillid { get; set; }
         public virtual DbSet<WzSpeedquiz> WzSpeedquiz { get; set; }
+        public virtual DbSet<ZHair> ZHair { get; set; }
+        public virtual DbSet<ZHeishi> ZHeishi { get; set; }
+        public virtual DbSet<ZMobmnzc> ZMobmnzc { get; set; }
+        public virtual DbSet<ZSonghuo> ZSonghuo { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;database=zevms027;uid=root;pwd=zevms027;AllowZeroDateTime=True;ConvertZeroDateTime=True;", x => x.ServerVersion("5.7.16-mysql"));
+                optionsBuilder.UseMySql("server=localhost;database=zevms027;uid=root;pwd=zevms027;allowzerodatetime=True;convertzerodatetime=True", x => x.ServerVersion("5.7.16-mysql"));
             }
         }
 
@@ -155,6 +166,11 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("tinytext")
                     .HasCharSet("gbk")
                     .HasCollation("gbk_chinese_ci");
+
+                entity.Property(e => e.Fj)
+                    .HasColumnName("fj")
+                    .HasColumnType("bigint(255)")
+                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.Gender)
                     .HasColumnName("gender")
@@ -515,6 +531,12 @@ namespace ZEVMSWEB.Models.Entities
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
+                entity.Property(e => e.Options2)
+                    .HasColumnName("options2")
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
                 entity.Property(e => e.Owner)
                     .HasColumnName("owner")
                     .HasColumnType("tinytext")
@@ -545,6 +567,10 @@ namespace ZEVMSWEB.Models.Entities
 
                 entity.Property(e => e.Socket)
                     .HasColumnName("socket")
+                    .HasColumnType("tinyint(3)");
+
+                entity.Property(e => e.Socket2)
+                    .HasColumnName("socket2")
                     .HasColumnType("tinyint(3)");
 
                 entity.Property(e => e.Speed)
@@ -619,6 +645,33 @@ namespace ZEVMSWEB.Models.Entities
                     .WithOne(p => p.Auctionpoint)
                     .HasForeignKey<Auctionpoint>(d => d.Characterid)
                     .HasConstraintName("auctionpoint_ibfk_1");
+            });
+
+            modelBuilder.Entity<Azjm>(entity =>
+            {
+                entity.ToTable("azjm");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.A)
+                    .IsRequired()
+                    .HasColumnName("a")
+                    .HasColumnType("varchar(255)")
+                    .HasDefaultValueSql("'0'")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
+
+                entity.Property(e => e.Jsid)
+                    .HasColumnName("jsid")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.X)
+                    .HasColumnName("x")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
             });
 
             modelBuilder.Entity<Bossloa>(entity =>
@@ -864,6 +917,11 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Aa)
+                    .HasColumnName("aa")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
                 entity.Property(e => e.Accountid)
                     .HasColumnName("accountid")
                     .HasColumnType("int(11)")
@@ -899,6 +957,11 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
 
+                entity.Property(e => e.Bb)
+                    .HasColumnName("bb")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'500000'");
+
                 entity.Property(e => e.Bosspoints)
                     .HasColumnName("bosspoints")
                     .HasColumnType("int(11)")
@@ -908,6 +971,11 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnName("buddyCapacity")
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'25'");
+
+                entity.Property(e => e.Cc)
+                    .HasColumnName("cc")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'199'");
 
                 entity.Property(e => e.Combat)
                     .HasColumnType("int(11)")
@@ -935,6 +1003,11 @@ namespace ZEVMSWEB.Models.Entities
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
+                entity.Property(e => e.Dd)
+                    .HasColumnName("dd")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'3000'");
+
                 entity.Property(e => e.Death)
                     .HasColumnName("death")
                     .HasColumnType("int(11)")
@@ -949,6 +1022,11 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnName("dianzhan")
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Ee)
+                    .HasColumnName("ee")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'100'");
 
                 entity.Property(e => e.Equipslots)
                     .HasColumnName("equipslots")
@@ -975,8 +1053,18 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
 
+                entity.Property(e => e.Ff)
+                    .HasColumnName("ff")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'10'");
+
                 entity.Property(e => e.ForgingExp)
                     .HasColumnName("forgingExp")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Fumolevel)
+                    .HasColumnName("fumolevel")
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
 
@@ -1465,12 +1553,32 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
 
+                entity.Property(e => e.Dkbck)
+                    .HasColumnName("dkbck")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
                 entity.Property(e => e.Feiqi)
                     .HasColumnName("feiqi")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Fmdxk)
+                    .HasColumnName("fmdxk")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Gaojifuhuo)
+                    .HasColumnName("gaojifuhuo")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
                 entity.Property(e => e.Hjfx)
                     .HasColumnName("hjfx")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Jueseshuliang)
+                    .HasColumnName("jueseshuliang")
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
 
@@ -1494,8 +1602,68 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
 
+                entity.Property(e => e.Pg10000)
+                    .HasColumnName("pg10000")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Pg100000)
+                    .HasColumnName("pg100000")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Pg1000000)
+                    .HasColumnName("pg1000000")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Pg50000)
+                    .HasColumnName("pg50000")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Pg500000)
+                    .HasColumnName("pg500000")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Pg5000000)
+                    .HasColumnName("pg5000000")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Putongfuhuo)
+                    .HasColumnName("putongfuhuo")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
                 entity.Property(e => e.Tplevel)
                     .HasColumnName("tplevel")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Wnk)
+                    .HasColumnName("wnk")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Zhakun)
+                    .HasColumnName("zhakun")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Zs499)
+                    .HasColumnName("zs499")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Zs99)
+                    .HasColumnName("zs99")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Zs999)
+                    .HasColumnName("zs999")
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
 
@@ -1709,15 +1877,77 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("int(11)");
             });
 
+            modelBuilder.Entity<DlqIllegalRecords>(entity =>
+            {
+                entity.ToTable("dlq_illegal_records");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Duetime)
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.IllegalFrequency)
+                    .HasColumnName("illegal_frequency")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Machine)
+                    .HasColumnName("machine")
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Remarks)
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+            });
+
+            modelBuilder.Entity<Dlqvip>(entity =>
+            {
+                entity.ToTable("dlqvip");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Duetime)
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Idid2)
+                    .HasColumnName("idid2")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Machine)
+                    .HasColumnName("machine")
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Number)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'2'");
+
+                entity.Property(e => e.Openquantity)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'2'");
+
+                entity.Property(e => e.Remarks)
+                    .HasColumnType("varchar(255)")
+                    .HasDefaultValueSql("'VIP'")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+            });
+
             modelBuilder.Entity<DropData>(entity =>
             {
                 entity.ToTable("drop_data");
-
-                entity.HasIndex(e => e.Dropperid)
-                    .HasName("mobid");
-
-                entity.HasIndex(e => new { e.Dropperid, e.Itemid })
-                    .HasName("dropperid_2");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -1764,7 +1994,7 @@ namespace ZEVMSWEB.Models.Entities
                 entity.Property(e => e.Chance)
                     .HasColumnName("chance")
                     .HasColumnType("int(11)")
-                    .HasDefaultValueSql("'200'");
+                    .HasDefaultValueSql("'10'");
 
                 entity.Property(e => e.Comments)
                     .HasColumnName("comments")
@@ -2102,6 +2332,12 @@ namespace ZEVMSWEB.Models.Entities
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
+                entity.Property(e => e.Options2)
+                    .HasColumnName("options2")
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
+
                 entity.Property(e => e.Owner)
                     .HasColumnName("owner")
                     .HasColumnType("varchar(255)")
@@ -2114,6 +2350,10 @@ namespace ZEVMSWEB.Models.Entities
 
                 entity.Property(e => e.Socket)
                     .HasColumnName("socket")
+                    .HasColumnType("tinyint(3)");
+
+                entity.Property(e => e.Socket2)
+                    .HasColumnName("socket2")
                     .HasColumnType("tinyint(3)");
 
                 entity.Property(e => e.Speed)
@@ -2568,16 +2808,30 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("varchar(255)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
+            });
 
-                entity.Property(e => e.Gailv)
-                    .HasColumnName("gailv")
-                    .HasColumnType("int(11)")
-                    .HasDefaultValueSql("'0'");
+            modelBuilder.Entity<MxmxdFumoInfo2>(entity =>
+            {
+                entity.HasKey(e => e.FumoType)
+                    .HasName("PRIMARY");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .HasDefaultValueSql("'0'");
+                entity.ToTable("mxmxd_fumo_info2");
+
+                entity.Property(e => e.FumoType)
+                    .HasColumnName("fumoType")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.FumoInfo)
+                    .HasColumnName("fumoInfo")
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.FumoName)
+                    .HasColumnName("fumoName")
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<MxmxdQqQun>(entity =>
@@ -2915,6 +3169,39 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnType("varchar(255)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
+            });
+
+            modelBuilder.Entity<Quests>(entity =>
+            {
+                entity.ToTable("quests");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.A)
+                    .IsRequired()
+                    .HasColumnName("a")
+                    .HasColumnType("varchar(255)")
+                    .HasDefaultValueSql("'0'")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
+
+                entity.Property(e => e.Jsid)
+                    .HasColumnName("jsid")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.T)
+                    .HasColumnName("t")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.X)
+                    .HasColumnName("x")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
             });
 
             modelBuilder.Entity<Reactordrops>(entity =>
@@ -3530,6 +3817,25 @@ namespace ZEVMSWEB.Models.Entities
                     .HasConstraintName("trocklocations_ibfk_1");
             });
 
+            modelBuilder.Entity<VipItemcount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("vip_itemcount");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Jilu)
+                    .IsRequired()
+                    .HasColumnName("jilu")
+                    .HasColumnType("varchar(255)")
+                    .HasDefaultValueSql("'0'")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+            });
+
             modelBuilder.Entity<Visitnpc>(entity =>
             {
                 entity.ToTable("visitnpc");
@@ -3588,6 +3894,20 @@ namespace ZEVMSWEB.Models.Entities
                     .HasColumnName("world")
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
+            });
+
+            modelBuilder.Entity<World>(entity =>
+            {
+                entity.ToTable("world");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Bl)
+                    .HasColumnName("bl")
+                    .HasColumnType("int(255)")
+                    .HasDefaultValueSql("'100'");
             });
 
             modelBuilder.Entity<WzMxditemid>(entity =>
@@ -3671,6 +3991,115 @@ namespace ZEVMSWEB.Models.Entities
                 entity.Property(e => e.Type)
                     .HasColumnName("type")
                     .HasColumnType("smallint(6)");
+            });
+
+            modelBuilder.Entity<ZHair>(entity =>
+            {
+                entity.ToTable("z_hair");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.C)
+                    .HasColumnName("c")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.D)
+                    .HasColumnName("d")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Hair)
+                    .HasColumnName("hair")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Jsid)
+                    .HasColumnName("jsid")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Shijian)
+                    .HasColumnName("shijian")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.Xjq)
+                    .HasColumnName("xjq")
+                    .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<ZHeishi>(entity =>
+            {
+                entity.ToTable("z_heishi");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Itemid)
+                    .HasColumnName("itemid")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.J)
+                    .HasColumnName("j")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.S)
+                    .HasColumnName("s")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.W)
+                    .HasColumnName("w")
+                    .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<ZMobmnzc>(entity =>
+            {
+                entity.ToTable("z_mobmnzc");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Jsid)
+                    .HasColumnName("jsid")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Mobid)
+                    .HasColumnName("mobid")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.X)
+                    .HasColumnName("x")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Y)
+                    .HasColumnName("y")
+                    .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<ZSonghuo>(entity =>
+            {
+                entity.ToTable("z_songhuo");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Jsid)
+                    .HasColumnName("jsid")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.S)
+                    .HasColumnName("s")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.W)
+                    .HasColumnName("w")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
             });
 
             OnModelCreatingPartial(modelBuilder);

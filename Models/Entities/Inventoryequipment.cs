@@ -36,6 +36,8 @@ namespace ZEVMSWEB.Models.Entities
         public bool? Locked { get; set; }
         public string Options { get; set; }
         public sbyte? Socket { get; set; }
+        public string Options2 { get; set; }
+        public sbyte? Socket2 { get; set; }
         public int? Dzlevel { get; set; }
     }
 }
