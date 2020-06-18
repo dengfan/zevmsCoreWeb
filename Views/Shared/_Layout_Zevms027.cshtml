@@ -28,7 +28,7 @@
                                 if (loginData != null)
                                 {
                                     <a href="#" class="nav-link text-dark" data-toggle="modal" data-target="#accountInfoModel">
-                                        我的账号
+                                        我的游戏角色
                                         <span class="badge badge-danger">New</span>
                                     </a>
                                 }
@@ -170,7 +170,7 @@
                                 @foreach (var w in loginData.Characters.Select(o => new { o.World, o.WorldName }).Distinct().OrderBy(o => o.World))
                                 {
                                     <tr>
-                                        <td colspan="4" class="text-center">- <span class="font-italic">@w.WorldName</span> -</td>
+                                        <td colspan="4" class="text-center">🎈 <span>@w.WorldName</span></td>
                                     </tr>
                                     @foreach (CharacterViewModel c in loginData.Characters.Where(o => o.World == w.World).OrderBy(o => o.Id))
                                     {
