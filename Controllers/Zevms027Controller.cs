@@ -294,6 +294,13 @@ namespace ZEVMSWEB.Controllers
         }
         #endregion
 
+        #region 绿水灵
+        public IActionResult LSL()
+        {
+            return View();
+        }
+        #endregion
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

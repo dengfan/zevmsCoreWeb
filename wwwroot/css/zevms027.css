@@ -1,5 +1,5 @@
 ﻿body {
-    background: url(../img/bg1.jpg) no-repeat center top fixed;
+    background: url(../img/bg2.jpg) no-repeat center top fixed;
 }
 
 header {
@@ -7,19 +7,21 @@ header {
 }
 
 .zevms_bg {
-    background: url(../img/nav_bg.png) no-repeat center top;
+    background: url(../img/nav_bg2.png) no-repeat center top;
 }
 
 .zevms_nav {
     position: relative;
+    padding-top: 156px;
     margin: 0 auto;
-    padding-top: 162px;
+    width: 280px;
     text-align: center;
     font-size: 0;
 }
 
     .zevms_nav a {
         display: inline-block;
+        margin-top: 8px;
         width: 27px;
         height: 95px;
         background: url(../img/WorldSelect.BtWorld.e.disabled.0.png) no-repeat center bottom;
@@ -27,6 +29,7 @@ header {
 
     .zevms_nav span {
         display: inline-block;
+        margin-top: 8px;
         width: 27px;
         height: 97px;
         background: url(../img/WorldSelect.BtWorld.e.disabled.0.png) no-repeat center bottom;
@@ -34,7 +37,7 @@ header {
 
     .zevms_nav a.active {
         position: relative;
-        top: 4px;
+        top: 6px;
         display: inline-block;
         width: 27px;
         height: 95px;

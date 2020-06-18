@@ -73,75 +73,35 @@
                     var pqe = currentActionName.Equals("pqe", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
                     var bxr = currentActionName.Equals("bxr", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
                     var str = currentActionName.Equals("str", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
-                    //var zsm = currentActionName.Equals("zsm", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
-                    //var dhl = currentActionName.Equals("dhl", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
-                    //var xbt = currentActionName.Equals("xbt", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
-                    //var phl = currentActionName.Equals("phl", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
-                    //var hyz = currentActionName.Equals("hyz", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
-                    //var qey = currentActionName.Equals("qey", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
-                    //var hmg = currentActionName.Equals("hmg", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+                    var zsm = currentActionName.Equals("zsm", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+                    var dhl = currentActionName.Equals("dhl", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+                    var xbt = currentActionName.Equals("xbt", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+                    var phl = currentActionName.Equals("phl", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+                    var hyz = currentActionName.Equals("hyz", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+                    var qey = currentActionName.Equals("qey", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+                    var hmg = currentActionName.Equals("hmg", StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
                 }
                 <div class="zevms_nav">
-                    <a class="@lwn" asp-area="" asp-controller="Zevms027" asp-action="LWN" title="蓝蜗牛" id="nav_item_lwn">
-                        <span style="display:none;">蓝蜗牛</span>
-                    </a>
-                    <a class="@mgz" asp-area="" asp-controller="Zevms027" asp-action="MGZ" title="蘑菇仔" id="nav_item_mgz">
-                        <span style="display:none;">蘑菇仔</span>
-                    </a>
-                    <span class="@lsl" asp-area="" asp-controller="Zevms027" asp-action="LSL" title="绿水灵" id="nav_item_lsl">
-                        <span style="display:none;">绿水灵</span>
-                    </span>
-                    <span class="@ppz" asp-area="" asp-controller="Zevms027" asp-action="PPZ" title="漂漂猪" id="nav_item_ppz">
-                        <span style="display:none;">漂漂猪</span>
-                    </span>
-                    <span class="@xqs" asp-area="" asp-controller="Zevms027" asp-action="XQS" title="小青蛇" id="nav_item_xqs">
-                        <span style="display:none;">小青蛇</span>
-                    </span>
-                    <span class="@hpx" asp-area="" asp-controller="Zevms027" asp-action="HPX" title="红螃蟹" id="nav_item_hpx">
-                        <span style="display:none;">红螃蟹</span>
-                    </span>
-                    <span class="@dhg" asp-area="" asp-controller="Zevms027" asp-action="DHG" title="大海龟" id="nav_item_dhg">
-                        <span style="display:none;">大海龟</span>
-                    </span>
-                    <span class="@zyg" asp-area="" asp-controller="Zevms027" asp-action="ZYG" title="章鱼怪" id="nav_item_zyg">
-                        <span style="display:none;">章鱼怪</span>
-                    </span>
-                    <span class="@wph" asp-area="" asp-controller="Zevms027" asp-action="WPH" title="顽皮猴" id="nav_item_wph">
-                        <span style="display:none;">顽皮猴</span>
-                    </span>
-                    <span class="@xjl" asp-area="" asp-controller="Zevms027" asp-action="XJL" title="星精灵" id="nav_item_xjl">
-                        <span style="display:none;">星精灵</span>
-                    </span>
-                    <span class="@pqe" asp-area="" asp-controller="Zevms027" asp-action="PQE" title="胖企鹅" id="nav_item_pqe">
-                        <span style="display:none;">胖企鹅</span>
-                    </span>
-                    <span class="@bxr" asp-area="" asp-controller="Zevms027" asp-action="BXR" title="白雪人" id="nav_item_bxr">
-                        <span style="display:none;">白雪人</span>
-                    </span>
-                    <span class="@str" asp-area="" asp-controller="Zevms027" asp-action="STR" title="石头人" id="nav_item_str">
-                        <span style="display:none;">石头人</span>
-                    </span>
-                    @*<span class="@zsm" asp-area="" asp-controller="Zevms027" asp-action="ZSM" title="紫色猫" id="nav_item_zsm">
-                            <span style="display:none;">紫色猫</span>
-                        </span>
-                        <span class="@dhl" asp-area="" asp-controller="Zevms027" asp-action="DHL" title="大灰狼" id="nav_item_dhl">
-                            <span style="display:none;">大灰狼</span>
-                        </span>
-                        <span class="@xbt" asp-area="" asp-controller="Zevms027" asp-action="XBT" title="小白兔" id="nav_item_xbt">
-                            <span style="display:none;">小白兔</span>
-                        </span>
-                        <span class="@phl" asp-area="" asp-controller="Zevms027" asp-action="PHL" title="喷火龙" id="nav_item_phl">
-                            <span style="display:none;">喷火龙</span>
-                        </span>
-                        <span class="@hyz" asp-area="" asp-controller="Zevms027" asp-action="HYZ" title="火野猪" id="nav_item_hyz">
-                            <span style="display:none;">火野猪</span>
-                        </span>
-                        <span class="@qey" asp-area="" asp-controller="Zevms027" asp-action="QEY" title="青鳄鱼" id="nav_item_qey">
-                            <span style="display:none;">青鳄鱼</span>
-                        </span>
-                        <span class="@hmg" asp-area="" asp-controller="Zevms027" asp-action="HMG" title="花蘑菇" id="nav_item_hmg">
-                            <span style="display:none;">花蘑菇</span>
-                        </span>*@
+                    <a class="@lwn" asp-area="" asp-controller="Zevms027" asp-action="LWN" title="蓝蜗牛" id="nav_item_lwn"></a>
+                    <a class="@mgz" asp-area="" asp-controller="Zevms027" asp-action="MGZ" title="蘑菇仔" id="nav_item_mgz"></a>
+                    <a class="@lsl" asp-area="" asp-controller="Zevms027" asp-action="LSL" title="绿水灵" id="nav_item_lsl"></a>
+                    <span class="@ppz" asp-area="" asp-controller="Zevms027" asp-action="PPZ" title="漂漂猪" id="nav_item_ppz"></span>
+                    <span class="@xqs" asp-area="" asp-controller="Zevms027" asp-action="XQS" title="小青蛇" id="nav_item_xqs"></span>
+                    <span class="@hpx" asp-area="" asp-controller="Zevms027" asp-action="HPX" title="红螃蟹" id="nav_item_hpx"></span>
+                    <span class="@dhg" asp-area="" asp-controller="Zevms027" asp-action="DHG" title="大海龟" id="nav_item_dhg"></span>
+                    <span class="@zyg" asp-area="" asp-controller="Zevms027" asp-action="ZYG" title="章鱼怪" id="nav_item_zyg"></span>
+                    <span class="@wph" asp-area="" asp-controller="Zevms027" asp-action="WPH" title="顽皮猴" id="nav_item_wph"></span>
+                    <span class="@xjl" asp-area="" asp-controller="Zevms027" asp-action="XJL" title="星精灵" id="nav_item_xjl"></span>
+                    <span class="@pqe" asp-area="" asp-controller="Zevms027" asp-action="PQE" title="胖企鹅" id="nav_item_pqe"></span>
+                    <span class="@bxr" asp-area="" asp-controller="Zevms027" asp-action="BXR" title="白雪人" id="nav_item_bxr"></span>
+                    <span class="@str" asp-area="" asp-controller="Zevms027" asp-action="STR" title="石头人" id="nav_item_str"></span>
+                    <span class="@zsm" asp-area="" asp-controller="Zevms027" asp-action="ZSM" title="紫色猫" id="nav_item_zsm"></span>
+                    <span class="@dhl" asp-area="" asp-controller="Zevms027" asp-action="DHL" title="大灰狼" id="nav_item_dhl"></span>
+                    <span class="@xbt" asp-area="" asp-controller="Zevms027" asp-action="XBT" title="小白兔" id="nav_item_xbt"></span>
+                    <span class="@phl" asp-area="" asp-controller="Zevms027" asp-action="PHL" title="喷火龙" id="nav_item_phl"></span>
+                    <span class="@hyz" asp-area="" asp-controller="Zevms027" asp-action="HYZ" title="火野猪" id="nav_item_hyz"></span>
+                    <span class="@qey" asp-area="" asp-controller="Zevms027" asp-action="QEY" title="青鳄鱼" id="nav_item_qey"></span>
+                    <span class="@hmg" asp-area="" asp-controller="Zevms027" asp-action="HMG" title="花蘑菇" id="nav_item_hmg"></span>
                 </div>
                 @RenderBody()
             </main>
