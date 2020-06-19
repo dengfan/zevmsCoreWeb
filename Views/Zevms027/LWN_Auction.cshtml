@@ -82,7 +82,7 @@
                     <span class="mx-1">@Html.DisplayFor(modelItem => item.ItemName)</span>
                     <span>&times;</span>
                     <span class="mx-1">@Html.DisplayFor(modelItem => item.Quantity)</span>
-                    <a href="#" class="badge badge-warning">🛒 @item.Price 金币</a>
+                    <a href="javascript:;" class="badge badge-warning zevms-buy-button" data-auctionItemId="@item.Id" data-toggle="modal" data-target="#selectCharacterModel">🛒 @item.Price 金币</a>
                 </div>
 
                 @if (item.InventoryType == 1)
@@ -179,3 +179,12 @@
         }
     </ul>
 </div>
+
+@section Scripts{
+    <script>
+        $(".zevms-buy-button").click(function () {
+            var $this = $(this);
+            alert($this.data('auctionitemid'));
+        });
+    </script>
+}

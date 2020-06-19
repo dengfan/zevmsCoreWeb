@@ -178,6 +178,7 @@ namespace ZEVMSWEB.Controllers
             string searchString,
             int? pageNumber)
         {
+            if (inventoryType <= 0) inventoryType = 1;
             ViewData["InventoryType"] = inventoryType;
             ViewData["CurrentSort"] = sortOrder;
             ViewData["ItemIdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";

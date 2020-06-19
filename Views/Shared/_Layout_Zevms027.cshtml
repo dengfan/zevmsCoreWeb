@@ -152,7 +152,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">我的游戏账号信息</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">我的游戏角色及信息</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -193,6 +193,71 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="zevms-logout-button">退出登录</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select Character Modal -->
+    <div class="modal fade" id="selectCharacterModel" data-keyboard="false" tabindex="-1" role="dialog"
+         aria-labelledby="selectCharacterModel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">请选择游戏角色</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @{
+                        if (loginData != null)
+                        {
+                            <table class="table">
+                                <tr class="table-borderless">
+                                    <th>角色</th>
+                                    <th>等级</th>
+                                    <th>职业</th>
+                                </tr>
+                                @{
+                                    if (loginData.Characters == null || loginData.Characters.Count == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="3" class="text-center">您还没有可用角色。</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        var wlist = loginData.Characters.Select(o => new { o.World, o.WorldName }).Distinct().OrderBy(o => o.World);
+                                        foreach (var w in wlist)
+                                        {
+                                            <tr>
+                                                <td colspan="3" class="text-center">🎈 <span>@w.WorldName</span></td>
+                                            </tr>
+                                            var clist = loginData.Characters.Where(o => o.World == w.World).OrderBy(o => o.Id);
+                                            foreach (CharacterViewModel c in clist)
+                                            {
+                                                <tr>
+                                                    <td class="text-md-left"><button class="btn btn-primary btn-sm mr-2">选择</button>@c.Name</td>
+                                                    <td>@c.Level</td>
+                                                    <td>@c.JobName</td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <p>
+                                请先登录。
+                            </p>
+                        }
+                    }
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
