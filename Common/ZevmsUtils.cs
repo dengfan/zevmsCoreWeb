@@ -24,7 +24,10 @@ namespace ZEVMSWEB.Common
                 var list = context.MxmxdFumoInfo.ToList().Select(o => new { o.FumoType, o.FumoName, o.FumoInfo }).OrderBy(o => o.FumoType);
                 foreach (var item in list)
                 {
-                    _fumoDescDic.Add(item.FumoType, string.Concat(item.FumoName, item.FumoInfo).Replace("%s", "{0}").Replace("%%", "%"));
+                    if (!_fumoDescDic.ContainsKey(item.FumoType))
+                    {
+                        _fumoDescDic.Add(item.FumoType, string.Concat(item.FumoName, item.FumoInfo).Replace("%s", "{0}").Replace("%%", "%"));
+                    }
                 }
             }
         }

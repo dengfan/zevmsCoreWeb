@@ -68,78 +68,79 @@
         }
     </ul>
 
-    <ul class="list-group">
-        <li class="list-group-item">
-            <a asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按道具排序</a>
-            <a class="ml-2" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按价格排序</a>
-        </li>
-        @foreach (var item in Model)
+    <div class="mb-2 border rounded bg-white p-2">
+        <div class="btn-group" role="group">
+            <a class="btn btn-default" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按道具排序</a>
+            <a class="btn btn-default" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按价格排序</a>
+        </div>
+        <div class="row mt-2">
+            @foreach (var item in Model)
             {
-        <li id="eqp-@item.ItemId" class="list-group-item">
-            <div style="position:relative;">
-                <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="true">
-                <span class="mx-1">@Html.DisplayFor(modelItem => item.ItemName)</span>
-                <span>&times;</span>
-                <span class="mx-1">@Html.DisplayFor(modelItem => item.Quantity)</span>
-                <span class="badge badge-warning" style="position:absolute;right:0;top:0;">@item.Price 金</span>
-            </div>
+            <div id="eqp-@item.ItemId" class="col-xl-4 col-md-6">
+                <div class="mt-2" style="height:32px;">
+                    <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="false">
+                    <span class="mx-1">@Html.DisplayFor(modelItem => item.ItemName)</span>
+                    <span>&times;</span>
+                    <span class="mx-1">@Html.DisplayFor(modelItem => item.Quantity)</span>
+                    <a href="#" class="badge badge-warning">🛒 @item.Price 金币</a>
+                </div>
 
-            @if (item.InventoryType == 1)
+                @if (item.InventoryType == 1)
                     {
-            <div class="zevms_eqp_panel_@item.DakongCount mt-2">
-                <span>商行道具ID：@Html.DisplayFor(modelItem => item.Id)</span><br />
-                <span>拥有者：@Html.DisplayFor(modelItem => item.OwnerCharacterName)</span><br />
-                <span>职业要求：</span><br />
-                <span>穿戴等级：</span><br />
-                @if (item.Strong > 0)
+                <div class="zevms_eqp_panel_@item.DakongCount mb-2">
+                    <span>商行道具ID：@Html.DisplayFor(modelItem => item.Id)</span><br />
+                    <span>卖家：@Html.DisplayFor(modelItem => item.OwnerCharacterName)</span><br />
+                    <span>职业要求：</span><br />
+                    <span>穿戴等级：</span><br />
+                    @if (item.Strong > 0)
                                 {
-                <span>力量 +</span>@Html.DisplayFor(modelItem => item.Strong)<br />
+                    <span>力量 +</span>@Html.DisplayFor(modelItem => item.Strong)<br />
                                 }
-                @if (item.Dexterity > 0)
+                    @if (item.Dexterity > 0)
                                 {
-                <span>敏捷 +</span>@Html.DisplayFor(modelItem => item.Dexterity)<br />
+                    <span>敏捷 +</span>@Html.DisplayFor(modelItem => item.Dexterity)<br />
                                 }
-                @if (item.Intelligence > 0)
+                    @if (item.Intelligence > 0)
                                 {
-                <span>智力 +</span>@Html.DisplayFor(modelItem => item.Intelligence)<br />
+                    <span>智力 +</span>@Html.DisplayFor(modelItem => item.Intelligence)<br />
                                 }
-                @if (item.Luck > 0)
+                    @if (item.Luck > 0)
                                 {
-                <span>运气 +</span>@Html.DisplayFor(modelItem => item.Luck)<br />
+                    <span>运气 +</span>@Html.DisplayFor(modelItem => item.Luck)<br />
                                 }
-                @if (item.WAtk > 0)
+                    @if (item.WAtk > 0)
                                 {
-                <span>物理攻击 +</span>@Html.DisplayFor(modelItem => item.WAtk)<br />
+                    <span>物理攻击 +</span>@Html.DisplayFor(modelItem => item.WAtk)<br />
                                 }
-                @if (item.WDef > 0)
+                    @if (item.WDef > 0)
                                 {
-                <span>物理防御 +</span>@Html.DisplayFor(modelItem => item.WDef)<br />
+                    <span>物理防御 +</span>@Html.DisplayFor(modelItem => item.WDef)<br />
                                 }
-                @if (item.MAtk > 0)
+                    @if (item.MAtk > 0)
                                 {
-                <span>魔法攻击 +</span>@Html.DisplayFor(modelItem => item.MAtk)<br />
+                    <span>魔法攻击 +</span>@Html.DisplayFor(modelItem => item.MAtk)<br />
                                 }
-                @if (item.MDef > 0)
+                    @if (item.MDef > 0)
                                 {
-                <span>魔法防御 +</span>@Html.DisplayFor(modelItem => item.MDef)<br />
+                    <span>魔法防御 +</span>@Html.DisplayFor(modelItem => item.MDef)<br />
                                 }
-                @if (item.Speed > 0)
+                    @if (item.Speed > 0)
                                 {
-                <span>移动速度 +</span>@Html.DisplayFor(modelItem => item.Speed)<br />
+                    <span>移动速度 +</span>@Html.DisplayFor(modelItem => item.Speed)<br />
                                 }
-                @if (item.Jump > 0)
+                    @if (item.Jump > 0)
                                 {
-                <span>跳跃力 +</span>@Html.DisplayFor(modelItem => item.Jump)<br />
+                    <span>跳跃力 +</span>@Html.DisplayFor(modelItem => item.Jump)<br />
                                 }
-                @if (!string.IsNullOrEmpty(item.FumoDesc)){
-                @Html.Raw(item.FumoDesc)
+                    @if (!string.IsNullOrEmpty(item.FumoDesc)){
+                    @Html.Raw(item.FumoDesc)
                                 }
-            </div>
+                </div>
                     }
-        </li>
-
+            </div>
             }
-    </ul>
+        </div>
+    </div>
 
     @*分页条*@
     <ul class="pagination justify-content-center">
