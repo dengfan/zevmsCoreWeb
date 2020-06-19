@@ -66,6 +66,16 @@ namespace ZEVMSWEB.Models
         public int MDef { get; set; }
 
         /// <summary>
+        /// 移动速度
+        /// </summary>
+        public int Speed { get; set; }
+
+        /// <summary>
+        /// 跳跃力
+        /// </summary>
+        public int Jump { get; set; }
+
+        /// <summary>
         /// 打孔数，用于判断装备品级
         /// </summary>
         public int DakongCount { get; set; }

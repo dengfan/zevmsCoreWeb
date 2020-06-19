@@ -244,6 +244,8 @@ namespace ZEVMSWEB.Controllers
                 WDef = o.Wdef.Value,
                 MAtk = o.Matk.Value,
                 MDef = o.Mdef.Value,
+                Speed = o.Speed.Value,
+                Jump = o.Jump.Value,
                 DakongCount = ZevmsUtils.GetDakongCount(o.Options),
                 FumoDesc = ZevmsUtils.GetFumoDescription(o.Options),
             }), pageNumber ?? 1, pageSize));
