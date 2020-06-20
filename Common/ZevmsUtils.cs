@@ -100,7 +100,7 @@ namespace ZEVMSWEB.Common
                 IPEndPoint remotePoint = new IPEndPoint(remoteIp, 9000);
                 SendToQqGroupClient.Send(bytes, bytes.Length, remotePoint);
 
-                Serilog.Log.Logger.Error("SendMsgToGameServer ok");
+                Serilog.Log.Logger.Information("SendMsgToGameServer ok, {0}", msg);
             }
             catch (Exception ex)
             {
