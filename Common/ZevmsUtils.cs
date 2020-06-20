@@ -93,7 +93,7 @@ namespace ZEVMSWEB.Common
         {
             try
             {
-                data = "G`1031315103`34443647`时代先锋`1`花木成畦手自栽";
+                data = "G`1031315103`花木成畦手自栽";
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 byte[] bytes = Encoding.GetEncoding("GB18030").GetBytes(data);
 
