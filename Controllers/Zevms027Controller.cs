@@ -353,7 +353,7 @@ namespace ZEVMSWEB.Controllers
                                 });
                             }
 
-                            var sendToQqGroupData = string.Format("{0}({1})在网页拍卖行下单了[{2}]“{3}”", name, characterId, auctionItemId, details);
+                            var sendToQqGroupData = string.Format("{0}({1}) 在网页拍卖行下单了 [{2}] “{3}”", name, characterId, auctionItemId, details);
 
                             // 发送数据给游戏服务端
                             ZevmsUtils.SendMsgToQqGroup(sendToQqGroupData);
