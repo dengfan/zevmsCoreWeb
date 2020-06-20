@@ -266,7 +266,7 @@ namespace ZEVMSWEB.Controllers
             try
             {
                 var arr = userAction.Split('`');
-                if (arr.Length != 2)
+                if (arr.Length != 3)
                 {
                     HttpContext.Session.Remove("LWN_UserAction");
                     return error;
@@ -299,7 +299,7 @@ namespace ZEVMSWEB.Controllers
             }
         }
 
-        public IActionResult LWN_UserAction_Confirm(int id)
+        public IActionResult LWN_UserAction_Confirm(int id, string name)
         {
             var error = new JsonResult(new ReponseJsonViewModel
             {
@@ -314,14 +314,14 @@ namespace ZEVMSWEB.Controllers
             {
                 // 先读取 UserAction
                 var userAction = HttpContext.Session.GetString("LWN_UserAction");
-                if (string.IsNullOrEmpty(userAction) || characterId <= 0)
+                if (string.IsNullOrEmpty(userAction) || characterId <= 0 || string.IsNullOrEmpty(name))
                 {
                     HttpContext.Session.Remove("LWN_UserAction");
                     return error;
                 }
 
                 var arr = userAction.Split('`');
-                if (arr.Length != 3)
+                if (arr.Length != 4)
                 {
                     HttpContext.Session.Remove("LWN_UserAction");
                     return error;
@@ -338,7 +338,9 @@ namespace ZEVMSWEB.Controllers
                                 return error;
                             }
 
-                            long timestamp = Convert.ToInt64(arr[2]);
+                            string details = arr[2];
+
+                            long timestamp = Convert.ToInt64(arr[3]);
                             long timestampNow = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                             if (timestampNow - timestamp > 20)
                             {
@@ -351,10 +353,10 @@ namespace ZEVMSWEB.Controllers
                                 });
                             }
 
-                            var sendData = string.Format("WEB_AUCTION_BUY`{0}`{1}", characterId, auctionItemId);
+                            var sendToQqGroupData = string.Format("{0}({1}) 在网页拍卖行下单了 {2}({3})", name, characterId, details, auctionItemId);
 
                             // 发送数据给游戏服务端
-                            ZevmsUtils.SendMsgToGameServer(sendData);
+                            ZevmsUtils.SendMsgToQqGroup(sendToQqGroupData);
                         }
                         break;
                     default:

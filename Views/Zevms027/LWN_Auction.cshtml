@@ -82,7 +82,7 @@
                         <span class="mx-1">@Html.DisplayFor(modelItem => item.ItemName)</span>
                         <span>&times;</span>
                         <span class="mx-1">@Html.DisplayFor(modelItem => item.Quantity)</span>
-                        <a href="javascript:;" class="badge badge-pill badge-warning py-1 px-2 zevms-buy-button" data-auctionItemId="@item.Id">
+                        <a href="javascript:;" class="badge badge-pill badge-warning py-1 px-2 zevms-buy-button" data-auctionItemId="@item.Id" data-auctionItemDesc="@(string.Format("{0} x {1} ", item.ItemName, item.Quantity))">
                             🛒 @item.Price 金币
                         </a>
                     </div>
@@ -187,8 +187,7 @@
     <script>
         $(".zevms-buy-button").click(function () {
             var $this = $(this);
-            var id = $this.data('auctionitemid');
-            $.post("/Zevms027/LWN_UserAction", { userAction: 'B`' + id }, function (res) {
+            $.post("/Zevms027/LWN_UserAction", { userAction: 'B`' + $this.data('auctionitemid') + '`' + $this.data('auctionitemdesc') }, function (res) {
                 if (res.code == 0) {
                     $('#selectCharacterModel').modal('show');
                 } else {

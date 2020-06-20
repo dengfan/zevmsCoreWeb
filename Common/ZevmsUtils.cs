@@ -87,19 +87,18 @@ namespace ZEVMSWEB.Common
             }
         }
 
-        public static UdpClient SendClient = new UdpClient(9001);
+        public static UdpClient SendToQqGroupClient = new UdpClient(9001);
 
-        public static void SendMsgToGameServer(string data)
+        public static void SendMsgToQqGroup(string msg)
         {
             try
             {
-                data = "G`1031315103`花木成畦手自栽";
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                byte[] bytes = Encoding.GetEncoding("GB18030").GetBytes(data);
+                byte[] bytes = Encoding.GetEncoding("GB18030").GetBytes(msg);
 
                 IPAddress remoteIp = IPAddress.Parse("127.0.0.1");
                 IPEndPoint remotePoint = new IPEndPoint(remoteIp, 9000);
-                SendClient.Send(bytes, bytes.Length, remotePoint);
+                SendToQqGroupClient.Send(bytes, bytes.Length, remotePoint);
 
                 Serilog.Log.Logger.Error("SendMsgToGameServer ok");
             }
