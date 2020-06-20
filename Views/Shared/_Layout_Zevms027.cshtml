@@ -135,7 +135,7 @@
                             <label for="inputPwd">密码</label>
                             <input type="password" class="form-control" id="inputPwd">
                         </div>
-                        <span id="zevms-login-failed-tips" style="color:red;"></span>
+                        <span id="zevms_login_failed_tips" style="color:red;"></span>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -187,7 +187,7 @@
                     }
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="zevms-logout-button">退出登录</button>
+                    <button type="button" class="btn btn-danger" id="zevms_logout_button">退出登录</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -262,10 +262,10 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
-
-<script>
-        $('#inputAcc,#inputPwd').focus(function () {
-            $('#zevms-login-failed-tips').text('');
+    @{ var ca = string.Format("/{0}/{1}", this.ViewContext.RouteData.Values["controller"], this.ViewContext.RouteData.Values["action"]); }
+    <script>
+        $('#inputAcc, #inputPwd').focus(function () {
+            $('#zevms_login_failed_tips').text('');
         });
 
         $('#zevms_login_button').click(function () {
@@ -276,26 +276,20 @@
             if (accVal.length > 4 && pwdVal.length > 4) {
                 $.post("/Zevms027/Login", { acc: accVal, pwd: pwdVal }, function (res) {
                     if (res.code == 0) {
-                        // 登录成功
-                        var c = '@this.ViewContext.RouteData.Values["controller"]';
-                        var a = '@this.ViewContext.RouteData.Values["action"]';
-                        window.location.href = '/' + c + '/' + a;
+                        window.location.href = '@ca';
                     } else {
-                        // 登录失败
-                        $('#zevms-login-failed-tips').text(res.msg);
+                        $('#zevms_login_failed_tips').text(res.msg);
                         $btn.text('登录').removeAttr('disabled');
                     }
                 });
             }
         });
 
-        $('#zevms-logout-button').click(function () {
+        $('#zevms_logout_button').click(function () {
             var $btn = $(this);
             $btn.text('登出中……').attr('disabled', true);
             $.post("/Zevms027/Logout", function (res) {
-                var c = '@this.ViewContext.RouteData.Values["controller"]';
-                var a = '@this.ViewContext.RouteData.Values["action"]';
-                window.location.href = '/' + c + '/' + a;
+                window.location.href = '@ca';
             });
         });
 
@@ -308,6 +302,6 @@
                 $('#selectCharacterModel').modal('hide');
             });
         });
-</script>
+    </script>
 </body>
 </html>
