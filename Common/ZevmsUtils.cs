@@ -100,6 +100,8 @@ namespace ZEVMSWEB.Common
                 IPAddress remoteIp = IPAddress.Parse("127.0.0.1");
                 IPEndPoint remotePoint = new IPEndPoint(remoteIp, 9000);
                 SendClient.Send(bytes, bytes.Length, remotePoint);
+
+                Serilog.Log.Logger.Error("SendMsgToGameServer ok");
             }
             catch (Exception ex)
             {

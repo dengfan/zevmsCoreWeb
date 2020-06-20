@@ -365,7 +365,7 @@ namespace ZEVMSWEB.Controllers
                 return new JsonResult(new ReponseJsonViewModel
                 {
                     Code = 0,
-                    Msg = "购买请求已发送，请登录游戏确认。\r\n如未购买成功：\r\n1、请检查金币是否足够。\r\n2、请确认该道具是否已售罄",
+                    Msg = "购买请求已发送，请登录游戏确认。\r\n如未购买成功：\r\n1、请检查金币是否足够。\r\n2、请确认该道具是否已售罄。",
                     Body = "ok",
                 });
             }
