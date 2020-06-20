@@ -89,10 +89,11 @@ namespace ZEVMSWEB.Common
 
         public static UdpClient SendToQqGroupClient = new UdpClient(9001);
 
-        public static void SendMsgToQqGroup(string msg)
+        public static void SendMsgToQqGroup(string data)
         {
             try
             {
+                string msg = string.Format("G`1031315103`{0}", data);
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 byte[] bytes = Encoding.GetEncoding("GB18030").GetBytes(msg);
 
