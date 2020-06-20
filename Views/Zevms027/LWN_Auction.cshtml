@@ -68,7 +68,7 @@
         }
     </ul>
 
-    <div class="mb-2 border rounded bg-white p-2">
+    <div class="mb-3 border rounded bg-white p-2">
         <div class="btn-group" role="group">
             <a class="btn btn-default" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按道具排序</a>
             <a class="btn btn-default" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按价格排序</a>
@@ -77,13 +77,12 @@
             @foreach (var item in Model)
             {
                 <div id="eqp-@item.ItemId" class="col-xl-4 col-md-6">
-                    <div class="mt-2" style="height:32px;">
+                    <div class="mt-2" style="height:36px;">
                         <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="false">
                         <span class="mx-1">@Html.DisplayFor(modelItem => item.ItemName)</span>
                         <span>&times;</span>
                         <span class="mx-1">@Html.DisplayFor(modelItem => item.Quantity)</span>
-                        <a href="javascript:;" class="badge badge-pill badge-warning zevms-buy-button" data-auctionItemId="@item.Id"
-                           data-toggle="modal" data-target="#selectCharacterModel">
+                        <a href="javascript:;" class="badge badge-pill badge-warning p-2 zevms-buy-button" data-auctionItemId="@item.Id">
                             🛒 @item.Price 金币
                         </a>
                     </div>
@@ -188,7 +187,14 @@
     <script>
         $(".zevms-buy-button").click(function () {
             var $this = $(this);
-            alert($this.data('auctionitemid'));
+            var id = $this.data('auctionitemid');
+            $.post("/Zevms027/LWN_UserAction", { userAction: 'B`' + id }, function (res) {
+                if (res.code == 0) {
+                    $('#selectCharacterModel').modal('show');
+                } else {
+                    alert(res.msg);
+                }
+            });
         });
     </script>
 }

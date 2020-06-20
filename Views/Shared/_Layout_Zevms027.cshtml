@@ -139,7 +139,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="zevms-login-button">登录</button>
+                    <button type="button" class="btn btn-primary" id="zevms_login_button">登录</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -161,27 +161,22 @@
                     @{
                         if (loginData != null)
                         {
-                            <table class="table">
-                                <tr class="table-borderless">
-                                    <th>角色</th>
-                                    <th>等级</th>
-                                    <th>职业</th>
-                                </tr>
+                            <ul class="list-group">
                                 @foreach (var w in loginData.Characters.Select(o => new { o.World, o.WorldName }).Distinct().OrderBy(o => o.World))
                                 {
-                                    <tr>
-                                        <td colspan="4" class="text-center">🎈 <span>@w.WorldName</span></td>
-                                    </tr>
+                                    <li class="list-group-item text-center"><strong>@w.WorldName</strong></li>
                                     @foreach (CharacterViewModel c in loginData.Characters.Where(o => o.World == w.World).OrderBy(o => o.Id))
                                     {
-                                        <tr>
-                                            <td>@c.Name</td>
-                                            <td>@c.Level</td>
-                                            <td>@c.JobName</td>
-                                        </tr>
+                                        <li class="list-group-item">
+                                            <span>
+                                                <span class="mx-1">@c.Name</span>
+                                                <small class="text-info">(@c.JobName)</small>
+                                            </span>
+                                            <span class="badge badge-primary badge-pill py-1 px-2 ml-1">@c.Level</span>
+                                        </li>
                                     }
                                 }
-                            </table>
+                            </ul>
                         }
                         else
                         {
@@ -214,40 +209,34 @@
                     @{
                         if (loginData != null)
                         {
-                            <table class="table">
-                                <tr class="table-borderless">
-                                    <th>角色</th>
-                                    <th>等级</th>
-                                    <th>职业</th>
-                                </tr>
+                            <div class="list-group">
                                 @{
                                     if (loginData.Characters == null || loginData.Characters.Count == 0)
                                     {
-                                        <tr>
-                                            <td colspan="3" class="text-center">您还没有可用角色。</td>
-                                        </tr>
+                                        <span class="list-group-item text-center">您还没有可用角色。</span>
                                     }
                                     else
                                     {
                                         var wlist = loginData.Characters.Select(o => new { o.World, o.WorldName }).Distinct().OrderBy(o => o.World);
                                         foreach (var w in wlist)
                                         {
-                                            <tr>
-                                                <td colspan="3" class="text-center">🎈 <span>@w.WorldName</span></td>
-                                            </tr>
+                                            <span class="list-group-item text-center"><strong>@w.WorldName</strong></span>
                                             var clist = loginData.Characters.Where(o => o.World == w.World).OrderBy(o => o.Id);
                                             foreach (CharacterViewModel c in clist)
                                             {
-                                                <tr>
-                                                    <td class="text-md-left"><button class="btn btn-primary btn-sm mr-2">选择</button>@c.Name</td>
-                                                    <td>@c.Level</td>
-                                                    <td>@c.JobName</td>
-                                                </tr>
+                                                <span class="list-group-item clearfix">
+                                                    <span>
+                                                        <span class="mx-1">@c.Name</span>
+                                                        <small class="text-info">(@c.JobName)</small>
+                                                    </span>
+                                                    <span class="badge badge-primary badge-pill py-1 px-2 ml-1">@c.Level</span>
+                                                    <button type="button" class="btn btn-default btn-sm float-right zevms_confirm_button" data-id="@c.Id">选择</button>
+                                                </span>
                                             }
                                         }
                                     }
                                 }
-                            </table>
+                            </div>
                         }
                         else
                         {
@@ -274,12 +263,12 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 
-    <script>
+<script>
         $('#inputAcc,#inputPwd').focus(function () {
             $('#zevms-login-failed-tips').text('');
         });
 
-        $('#zevms-login-button').click(function () {
+        $('#zevms_login_button').click(function () {
             var $btn = $(this);
             $btn.text('登录中……').attr('disabled', true);
             var accVal = $('#inputAcc').val();
@@ -309,6 +298,16 @@
                 window.location.href = '/' + c + '/' + a;
             });
         });
-    </script>
+
+        $('.zevms_confirm_button').click(function () {
+            var $btn = $(this);
+            $btn.text('处理中……').attr('disabled', true);
+            $.post("/Zevms027/LWN_UserAction_Confirm", { id: $btn.data('id') }, function (res) {
+                alert(res.msg);
+                $btn.text('选择').removeAttr('disabled');
+                $('#selectCharacterModel').modal('hide');
+            });
+        });
+</script>
 </body>
 </html>

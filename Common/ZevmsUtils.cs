@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -82,6 +84,26 @@ namespace ZEVMSWEB.Common
             catch (Exception ex)
             {
                 return ex.Message;
+            }
+        }
+
+        public static UdpClient SendClient = new UdpClient(9001);
+
+        public static void SendMsgToGameServer(string data)
+        {
+            try
+            {
+                data = "G`1031315103`34443647`时代先锋`1`花木成畦手自栽";
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                byte[] bytes = Encoding.GetEncoding("GB18030").GetBytes(data);
+
+                IPAddress remoteIp = IPAddress.Parse("127.0.0.1");
+                IPEndPoint remotePoint = new IPEndPoint(remoteIp, 9000);
+                SendClient.Send(bytes, bytes.Length, remotePoint);
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Logger.Error(ex, "SendMsgToGameServer error");
             }
         }
     }
