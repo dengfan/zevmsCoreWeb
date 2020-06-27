@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MySqlX.XDevAPI;
 using reWZ;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ZEVMSWEB.Common;
@@ -250,6 +252,134 @@ namespace ZEVMSWEB.Controllers
                 DakongCount = ZevmsUtils.GetDakongCount(o.Options),
                 FumoDesc = ZevmsUtils.GetFumoDescription(o.Options),
             }), pageNumber ?? 1, pageSize));
+        }
+
+        public IActionResult LWN_UserAction(string userAction)
+        {
+            var error = new JsonResult(new ReponseJsonViewModel
+            {
+                Code = 1,
+                Msg = "哦豁，出错了，请稍候重试。",
+                Body = "",
+            });
+
+            try
+            {
+                var arr = userAction.Split('`');
+                if (arr.Length != 3)
+                {
+                    HttpContext.Session.Remove("LWN_UserAction");
+                    return error;
+                }
+
+                if (arr[0].Length != 1)
+                {
+                    HttpContext.Session.Remove("LWN_UserAction");
+                    return error;
+                }
+
+                long timestamp = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                HttpContext.Session.SetString("LWN_UserAction", string.Concat(userAction, "`", timestamp));
+
+                return new JsonResult(new ReponseJsonViewModel
+                {
+                    Code = 0,
+                    Msg = "ok",
+                    Body = "ok",
+                });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new ReponseJsonViewModel
+                {
+                    Code = 2,
+                    Msg = string.Concat("哦豁，出错了。", ex.Message),
+                    Body = ex,
+                });
+            }
+        }
+
+        public IActionResult LWN_UserAction_Confirm(int id, string name)
+        {
+            var error = new JsonResult(new ReponseJsonViewModel
+            {
+                Code = 1,
+                Msg = "哦豁，出错了，请稍候重试。",
+                Body = "",
+            });
+
+            int characterId = id;
+
+            try
+            {
+                // 先读取 UserAction
+                var userAction = HttpContext.Session.GetString("LWN_UserAction");
+                if (string.IsNullOrEmpty(userAction) || characterId <= 0 || string.IsNullOrEmpty(name))
+                {
+                    HttpContext.Session.Remove("LWN_UserAction");
+                    return error;
+                }
+
+                var arr = userAction.Split('`');
+                if (arr.Length != 4)
+                {
+                    HttpContext.Session.Remove("LWN_UserAction");
+                    return error;
+                }
+
+                switch (arr[0])
+                {
+                    case "B":
+                        {
+                            int auctionItemId = 0;
+                            if (!int.TryParse(arr[1], out auctionItemId))
+                            {
+                                HttpContext.Session.Remove("LWN_UserAction");
+                                return error;
+                            }
+
+                            string details = arr[2];
+
+                            long timestamp = Convert.ToInt64(arr[3]);
+                            long timestampNow = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                            if (timestampNow - timestamp > 20)
+                            {
+                                HttpContext.Session.Remove("LWN_UserAction");
+                                return new JsonResult(new ReponseJsonViewModel
+                                {
+                                    Code = 1,
+                                    Msg = "哦豁，超时了，请重试。",
+                                    Body = "",
+                                });
+                            }
+
+                            var sendToQqGroupData = string.Format("{0}({1}) 在网页拍卖行下单了 [{2}] “{3}”", name, characterId, auctionItemId, details);
+
+                            // 发送数据给游戏服务端
+                            ZevmsUtils.SendMsgToQqGroup(sendToQqGroupData);
+                        }
+                        break;
+                    default:
+                        HttpContext.Session.Remove("LWN_UserAction");
+                        return error;
+                }
+
+                return new JsonResult(new ReponseJsonViewModel
+                {
+                    Code = 0,
+                    Msg = "购买请求已发送，请登录游戏确认。\r\n如未购买成功：\r\n1、请检查金币是否足够。\r\n2、请确认该道具是否已售罄。",
+                    Body = "ok",
+                });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new ReponseJsonViewModel
+                {
+                    Code = 2,
+                    Msg = string.Concat("哦豁，出错了。", ex.Message),
+                    Body = ex,
+                });
+            }
         }
         #endregion
 

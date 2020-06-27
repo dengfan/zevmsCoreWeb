@@ -135,7 +135,7 @@ header {
 
 .zevms_container {
     margin-top: 12px;
-    padding: 12px;
+    padding: 10px;
     border: 2px solid #9D894C;
     border-radius: 16px;
     background-color: #f7fed8;
@@ -143,101 +143,82 @@ header {
     min-height: 100px;
 }
 
-.zevms_eqp_panel_0 {
+.zevms_eqp_panel {
     margin-bottom: 4px;
     padding: 12px;
-    border: 1px solid #ededed;
     border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.zevms_eqp_panel_0 {
+    border: 1px solid #ededed;
     background-color: #ffffff;
     color: #808080;
 }
 
 .zevms_eqp_panel_1 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #afdeff;
-    border-radius: 4px;
     background-color: #d8f1ff;
     color: #3e66d2;
 }
 
 .zevms_eqp_panel_2 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #ffbff1;
-    border-radius: 4px;
     background-color: #fcebfa;
     color: #d270dd;
 }
 
 .zevms_eqp_panel_3 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #c8a2ff;
-    border-radius: 4px;
     background-color: #dfc9ff;
     color: #7e34bf;
 }
 
 .zevms_eqp_panel_4 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #ffb100;
-    border-radius: 4px;
     background-color: #ffb100;
     color: #fff4b3;
 }
 
 .zevms_eqp_panel_5 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #7b7b7b;
-    border-radius: 4px;
     background-color: #c4c4c4;
     color: #575656;
 }
 
 .zevms_eqp_panel_6 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #292929;
-    border-radius: 4px;
     background-color: #292929;
     color: #a9a9a9;
 }
 
 .zevms_eqp_panel_7 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #292929;
-    border-radius: 4px;
     background-color: #292929;
     color: #ffda68;
 }
 
 .zevms_eqp_panel_8 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #292929;
-    border-radius: 4px;
     background-color: #292929;
     color: #ffda68;
 }
 
 .zevms_eqp_panel_9 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #292929;
-    border-radius: 4px;
     background-color: #292929;
     color: #ffda68;
 }
 
 .zevms_eqp_panel_10 {
-    margin-bottom: 4px;
-    padding: 12px;
     border: 1px solid #292929;
-    border-radius: 4px;
     background-color: #292929;
     color: #ffda68;
 }
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 513ee7ce23f34f8aea49604c4f36674c7c1df97f

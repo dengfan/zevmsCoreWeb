@@ -35,40 +35,40 @@
     <ul class="pagination justify-content-center">
         @if (Model.Start > 1 && Model.End > 1) // 加上首页
         {
-        <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
-            <a asp-action="LWN_Auction"
-               asp-route-inventoryType="@ViewData["InventoryType"]"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="1"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">1</a>
-        </li>
+            <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="1"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">1</a>
+            </li>
         }
         @for (var i = Model.Start; i <= Model.End; i++)
         {
-        <li class="page-item @(Model.PageIndex == i ? "active" : "")">
-            <a asp-action="LWN_Auction"
-               asp-route-inventoryType="@ViewData["InventoryType"]"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@i"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">@i</a>
-        </li>
+            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@i</a>
+            </li>
         }
         @if (Model.Start < Model.TotalPages && Model.End < Model.TotalPages) // 加上尾页
         {
-        <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
-            <a asp-action="LWN_Auction"
-               asp-route-inventoryType="@ViewData["InventoryType"]"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@Model.TotalPages"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">@Model.TotalPages</a>
-        </li>
+            <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@Model.TotalPages"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@Model.TotalPages</a>
+            </li>
         }
     </ul>
 
-    <div class="mb-2 border rounded bg-white p-2">
+    <div class="mb-3 border rounded bg-white p-2">
         <div class="btn-group" role="group">
             <a class="btn btn-default" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["ItemIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按道具排序</a>
             <a class="btn btn-default" asp-action="LWN_Auction" asp-route-inventoryType="@ViewData["InventoryType"]" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">按价格排序</a>
@@ -76,68 +76,71 @@
         <div class="row mt-2">
             @foreach (var item in Model)
             {
-            <div id="eqp-@item.ItemId" class="col-xl-4 col-md-6">
-                <div class="mt-2" style="height:32px;">
-                    <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="false">
-                    <span class="mx-1">@Html.DisplayFor(modelItem => item.ItemName)</span>
-                    <span>&times;</span>
-                    <span class="mx-1">@Html.DisplayFor(modelItem => item.Quantity)</span>
-                    <a href="javascript:;" class="badge badge-warning zevms-buy-button" data-auctionItemId="@item.Id" data-toggle="modal" data-target="#selectCharacterModel">🛒 @item.Price 金币</a>
-                </div>
+                <div id="eqp-@item.ItemId" class="col-xl-4 col-md-6">
+                    <div class="mt-2" style="height:36px;">
+                        <img src="data:image/png;base64,@item.ItemImageBase64String" asp-append-version="false">
+                        <span class="mx-1">@Html.DisplayFor(modelItem => item.ItemName)</span>
+                        <span>&times;</span>
+                        <span class="mx-1">@Html.DisplayFor(modelItem => item.Quantity)</span>
+                        <a href="javascript:;" class="badge badge-pill badge-warning py-1 px-2 zevms-buy-button" data-auctionItemId="@item.Id" data-auctionItemDesc="@(string.Format("{0} x {1}", item.ItemName, item.Quantity))">
+                            🛒 @item.Price 金币
+                        </a>
+                    </div>
 
-                @if (item.InventoryType == 1)
+                    @if (item.InventoryType == 1)
                     {
-                <div class="zevms_eqp_panel_@item.DakongCount mb-2">
-                    <span>商行道具ID：@Html.DisplayFor(modelItem => item.Id)</span><br />
-                    <span>卖家：@Html.DisplayFor(modelItem => item.OwnerCharacterName)</span><br />
-                    <span>职业要求：</span><br />
-                    <span>穿戴等级：</span><br />
-                    @if (item.Strong > 0)
-                                {
-                    <span>力量 +</span>@Html.DisplayFor(modelItem => item.Strong)<br />
-                                }
-                    @if (item.Dexterity > 0)
-                                {
-                    <span>敏捷 +</span>@Html.DisplayFor(modelItem => item.Dexterity)<br />
-                                }
-                    @if (item.Intelligence > 0)
-                                {
-                    <span>智力 +</span>@Html.DisplayFor(modelItem => item.Intelligence)<br />
-                                }
-                    @if (item.Luck > 0)
-                                {
-                    <span>运气 +</span>@Html.DisplayFor(modelItem => item.Luck)<br />
-                                }
-                    @if (item.WAtk > 0)
-                                {
-                    <span>物理攻击 +</span>@Html.DisplayFor(modelItem => item.WAtk)<br />
-                                }
-                    @if (item.WDef > 0)
-                                {
-                    <span>物理防御 +</span>@Html.DisplayFor(modelItem => item.WDef)<br />
-                                }
-                    @if (item.MAtk > 0)
-                                {
-                    <span>魔法攻击 +</span>@Html.DisplayFor(modelItem => item.MAtk)<br />
-                                }
-                    @if (item.MDef > 0)
-                                {
-                    <span>魔法防御 +</span>@Html.DisplayFor(modelItem => item.MDef)<br />
-                                }
-                    @if (item.Speed > 0)
-                                {
-                    <span>移动速度 +</span>@Html.DisplayFor(modelItem => item.Speed)<br />
-                                }
-                    @if (item.Jump > 0)
-                                {
-                    <span>跳跃力 +</span>@Html.DisplayFor(modelItem => item.Jump)<br />
-                                }
-                    @if (!string.IsNullOrEmpty(item.FumoDesc)){
-                    @Html.Raw(item.FumoDesc)
-                                }
-                </div>
+                        <div class="shadow-sm zevms_eqp_panel zevms_eqp_panel_@item.DakongCount mb-2">
+                            <span>商行道具ID：@Html.DisplayFor(modelItem => item.Id)</span><br />
+                            <span>卖家：@Html.DisplayFor(modelItem => item.OwnerCharacterName)</span><br />
+                            <span>职业要求：</span><br />
+                            <span>穿戴等级：</span><br />
+                            @if (item.Strong > 0)
+                            {
+                                <span>力量 +</span>@Html.DisplayFor(modelItem => item.Strong)<br />
+                            }
+                            @if (item.Dexterity > 0)
+                            {
+                                <span>敏捷 +</span>@Html.DisplayFor(modelItem => item.Dexterity)<br />
+                            }
+                            @if (item.Intelligence > 0)
+                            {
+                                <span>智力 +</span>@Html.DisplayFor(modelItem => item.Intelligence)<br />
+                            }
+                            @if (item.Luck > 0)
+                            {
+                                <span>运气 +</span>@Html.DisplayFor(modelItem => item.Luck)<br />
+                            }
+                            @if (item.WAtk > 0)
+                            {
+                                <span>物理攻击 +</span>@Html.DisplayFor(modelItem => item.WAtk)<br />
+                            }
+                            @if (item.WDef > 0)
+                            {
+                                <span>物理防御 +</span>@Html.DisplayFor(modelItem => item.WDef)<br />
+                            }
+                            @if (item.MAtk > 0)
+                            {
+                                <span>魔法攻击 +</span>@Html.DisplayFor(modelItem => item.MAtk)<br />
+                            }
+                            @if (item.MDef > 0)
+                            {
+                                <span>魔法防御 +</span>@Html.DisplayFor(modelItem => item.MDef)<br />
+                            }
+                            @if (item.Speed > 0)
+                            {
+                                <span>移动速度 +</span>@Html.DisplayFor(modelItem => item.Speed)<br />
+                            }
+                            @if (item.Jump > 0)
+                            {
+                                <span>跳跃力 +</span>@Html.DisplayFor(modelItem => item.Jump)<br />
+                            }
+                            @if (!string.IsNullOrEmpty(item.FumoDesc))
+                            {
+                                @Html.Raw(item.FumoDesc)
+                            }
+                        </div>
                     }
-            </div>
+                </div>
             }
         </div>
     </div>
@@ -146,36 +149,36 @@
     <ul class="pagination justify-content-center">
         @if (Model.Start > 1 && Model.End > 1) // 加上首页
         {
-        <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
-            <a asp-action="LWN_Auction"
-               asp-route-inventoryType="@ViewData["InventoryType"]"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="1"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">1</a>
-        </li>
+            <li class="page-item mr-2 @(Model.PageIndex == 1 ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="1"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">1</a>
+            </li>
         }
         @for (var i = Model.Start; i <= Model.End; i++)
         {
-        <li class="page-item @(Model.PageIndex == i ? "active" : "")">
-            <a asp-action="LWN_Auction"
-               asp-route-inventoryType="@ViewData["InventoryType"]"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@i"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">@i</a>
-        </li>
+            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@i</a>
+            </li>
         }
         @if (Model.Start < Model.TotalPages && Model.End < Model.TotalPages) // 加上尾页
         {
-        <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
-            <a asp-action="LWN_Auction"
-               asp-route-inventoryType="@ViewData["InventoryType"]"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@Model.TotalPages"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="page-link">@Model.TotalPages</a>
-        </li>
+            <li class="page-item ml-2 @(Model.PageIndex == Model.TotalPages ? "active" : "")">
+                <a asp-action="LWN_Auction"
+                   asp-route-inventoryType="@ViewData["InventoryType"]"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@Model.TotalPages"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="page-link">@Model.TotalPages</a>
+            </li>
         }
     </ul>
 </div>
@@ -184,7 +187,13 @@
     <script>
         $(".zevms-buy-button").click(function () {
             var $this = $(this);
-            alert($this.data('auctionitemid'));
+            $.post("/Zevms027/LWN_UserAction", { userAction: 'B`' + $this.data('auctionitemid') + '`' + $this.data('auctionitemdesc') }, function (res) {
+                if (res.code == 0) {
+                    $('#selectCharacterModel').modal('show');
+                } else {
+                    alert(res.msg);
+                }
+            });
         });
     </script>
 }
